@@ -34,14 +34,14 @@
 				<td>: </td>
 				<td>
 					<div class="input-group">
-						<input type="password" id="txtpassword" class="form-control"  required="required">
+						<input type="password" id="txtpassword" class="form-control" placeholder="Password"  required="required">
 						<span class="input-group-text" id="hide" onclick="hidepass()" title="show" data-bs-toggle="tooltip"><i class="bi bi-eye-fill" id="icon" ></i></span>
 					</div>
 				</td>
 			</tr>
 			<tr id="submit" >
 				<td colspan="3" class="w-100 text-center mt-3	">
-					<input type="submit" onclick="login()">
+					<input type="submit" onclick="login()" id="submit_form">
 					<input type="reset">
 				</td>
 			</tr>
@@ -61,7 +61,12 @@
 				alert("Please Enter Password");
 
 			else if (user.value=="nevilpala" && pass.value=="nevil"){
-				alert("VALID");
+				alert("VALID USER");
+
+				var sub= document.getElementById('submit_form');
+				sub.type="button";
+				location.href =("https://nevilpala.github.io/uni/index.html");
+
 			}	
 			else{
 				alert("INVALID USERNAME or PASSWORD");
@@ -80,6 +85,9 @@
 				document.getElementById('icon').className="bi bi-eye-fill";
 				document.getElementById('hide').title="show";
 			}
+		}
+		function validlogin(){
+			
 		}
 	</script>
 </body>

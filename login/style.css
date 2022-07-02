@@ -3,17 +3,16 @@
 	justify-content: flex-end;
 	align-items: stretch;
 	height: 100vh;
-	overflow: hidden;	
 	background-image: url(com.png);
 	background-size: cover;
-	background-position: center;
+	background-position: center center;
 	background-repeat: no-repeat;
 	width: 100%;
 }
 @media screen and (max-width: 576px){
 	.body{
 		justify-content: center!important;
-		padding: 50PX;
+		padding: 50PX;	
 	}
 }
 .login-title{
