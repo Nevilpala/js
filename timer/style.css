@@ -1,10 +1,24 @@
 
 body{
-	background-color: rgb(214 244 160);
+	/*background-color: rgb(214 244 160);*/
+	background-image: url(bg.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	min-height: 100vh;
+	align-items: center;
+	color: white;
+
+}
+.div{
+	padding: 20px 50px;
+	border-radius: 20px;
+	background-color: rgba(0,0,0,0.5);
+	flex-direction: column;
+	display: flex;
+	justify-content: center;
 	align-items: center;
 }
 p span{
@@ -13,16 +27,32 @@ p span{
 	cursor: pointer;
 	user-select: none;
 }
+.stopwatch_image{
+	height: 100px;
+	width: 100px;
+}
 .time{
 	margin-top: 10px;
 	display: flex;
 }
 #logs{
 	padding: 15px;
-	height: 50vh!important;
+	height: 40vh!important;
 	width: 200px;
 	background-color: rgba(255,122,255,0.1);
 	overflow: auto;
+	overflow-x: hidden;
+}
+#logs::-webkit-scrollbar{
+	width: 5px;
+}
+#logs::-webkit-scrollbar-track{
+	background-color: rgba(0,0,0,0.2);
+	border-radius: 100px;
+}
+#logs::-webkit-scrollbar-thumb{
+	background-color: rgba(0,0,0,0.5);
+	border-radius: 100px;
 }
 button{
 	margin-top: 5px;
