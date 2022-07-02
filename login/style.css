@@ -1,0 +1,55 @@
+.body{
+	display: flex;
+	justify-content: flex-end;
+	align-items: stretch;
+	height: 100vh;
+	overflow: hidden;	
+	background-image: url(com.png);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 100%;
+}
+@media screen and (max-width: 576px){
+	.body{
+		justify-content: center!important;
+		padding: 50PX;
+	}
+}
+.login-title{
+	position: absolute;
+	width: 100%;
+	margin-bottom: 25%;
+	font-weight: bold;
+	text-align: center;
+	font-size: 70px;
+	top: 25px;
+	left: 0;
+	padding-bottom: 20px;
+	border-bottom: 5px dotted rgba(52,49,72);
+}
+#frm{
+	background-color: rgba(255,255,255,0.8);
+	padding: 50px;
+	display: flex;
+	align-items: center;
+	position: relative;
+}
+table tr:not(#submit) td:first-child{
+	width: 30%;
+	font-weight: bold;
+	height: 100%;
+}
+table tr:not(#submit) td:nth-child(2){
+	width: 5%;
+	font-weight: bold;
+	height: 100%;
+}
+#submit input{
+	width: 100px;
+	height: 35px;
+	background-color: rgb(52,49,72);
+	border: 0;
+	color: white;
+	margin-top: 25px;
+}
