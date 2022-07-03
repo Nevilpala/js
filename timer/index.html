@@ -22,9 +22,9 @@
 		<div class="row g-5 justify-content-around align-items-center">
 			<div class="col-lg-3">
 				<div class="button_timer " id="buttons">
-					<button type="button" class="btn corosolbtn actives" data-bs-target="#timer-watch" data-bs-slide-to="0" aria-current="true" aria-label="Slide 1" onclick="resetSTOPWATCH()">STOP WATCH</button>
+					<button type="button" title="STOP WATCH" class="btn corosolbtn actives" data-bs-target="#timer-watch" data-bs-slide-to="0" aria-current="true" aria-label="Slide 1" onclick="resetSTOPWATCH()">STOP WATCH</button>
 					<br>
-					<button type="button" class="btn corosolbtn" data-bs-target="#timer-watch" data-bs-slide-to="1" aria-label="Slide 2" onclick="resetTimer()">TIMER</button>
+					<button type="button" title="TIMER" class="btn corosolbtn" data-bs-target="#timer-watch" data-bs-slide-to="1" aria-label="Slide 2" onclick="resetTimer()">TIMER</button>
 				</div>
 			</div>
 			<div class="col-lg-8">
@@ -58,7 +58,7 @@
 						</div>
 						<div class="carousel-item">
 							<div class="div">
-								<!-- <img src="hourglass.gif" id="img"> -->
+									<button type="button" onclick="resetTimer()" id="img"><img src="hourglass.gif" class="text-center"  title="TIME OUT"></button>
 								<h1 class="display-2 fw-bold py-3 timer_title"><i class="far fa-clock"></i> TIMER</h1>
 								<hr class="opacity-100 w-100 mb-5">
 
@@ -179,7 +179,6 @@
 			}
 			if(s==0 && m==0 && h==0)
 			{
-				var bodys = document.getElementById('img');
 				document.getElementById('img').style.display = "block";
 			}
 			if(s>60 || m>60 || h>24){
@@ -197,6 +196,7 @@
 			s="00";
 			m="00";
 			h="00";
+			document.getElementById('img').style.display = "none";
 			document.getElementById('sec').value = s;
 			document.getElementById('min').value = m;
 			document.getElementById('hr').value	= h	;
