@@ -1,0 +1,115 @@
+body{
+	background: url(t.jpg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	min-height: 100vh;
+}
+.button_timer{
+	background-color: rgba(0,0,0,0.8);
+	border-radius: 20px;
+	padding: 25px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.button_timer button{
+	width: 150px!important;
+}
+.container{
+	padding: 5vh;
+}
+.div{
+	width: 100%;
+	padding: 30px 50px;
+	border-radius: 20px;
+	background-color: rgba(0,0,0,0.8);
+	flex-direction: column;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 90vh;
+	position: relative;
+	color: white;
+}
+
+#logs{
+	padding: 15px;
+	height: 30vh!important;
+	width: 200px;
+	background-color: rgba(255,122,255,0.1);
+	overflow: auto;
+	overflow-x: hidden;
+	color: white;
+}
+#logs::-webkit-scrollbar{
+	width: 5px;
+}
+#logs::-webkit-scrollbar-track{
+	background-color: rgba(255,255,255,0.2);
+	border-radius: 100px;
+}
+#logs::-webkit-scrollbar-thumb{
+	background-color: rgba(0,0,0,0.7);
+	border-radius: 100px;
+}
+p.time{
+	display: flex;	
+}
+p.time span{
+	width: 100px;
+	text-align: center;
+	cursor: pointer;
+	user-select: none;
+}
+
+/*timer*/
+
+
+.timer{
+	display: flex;
+	margin-top: 20px;
+}
+.timer input {
+	width: 100px;
+	text-align: center;
+	background-color: transparent;
+	border: 0;
+	font-weight: bold;
+	color: white;
+	outline: 0;
+}
+.timer span{
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+.timer label{
+	position: absolute;
+	top: -10px;
+	font-size: 15px;
+	left: 0;
+	width: 100%;
+	z-index: 99;
+	text-align: center;
+}
+#img{
+	display: none;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+}
+.corosolbtn{
+	background-color: lightgreen;
+	font-weight: bold;
+	color: green;
+}
+.corosolbtn:hover{
+	color: black;
+}
+.actives{
+	background-color: green;
+	color: lightgreen
+}
