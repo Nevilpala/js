@@ -159,7 +159,12 @@
 			var m =		document.getElementById('min').value	;
 			var h =		document.getElementById('hr').value		;
 
-			if(s<60){
+			if(s>59 || m>59 || h>24){
+				resetTimer();
+				alert("INCORECT INPUT");
+			}
+
+			else if(s<60){
 				if(s>0){
 					s--;
 				}
@@ -180,10 +185,6 @@
 			if(s==0 && m==0 && h==0)
 			{
 				document.getElementById('img').style.display = "block";
-			}
-			if(s>60 || m>60 || h>24){
-				alert("INCORECT INPUT");
-				resetTimer();
 			}
 		}
 		function startTimer(){
