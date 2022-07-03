@@ -1,0 +1,73 @@
+
+body{
+	background-color: rgb(214 244 160);
+	background-image: url(t.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	min-height: 100vh;
+	color: white;
+	overflow-x: hidden;
+	padding: 5vh;
+}
+.timer_title{
+	width: 100%;
+	padding: 10px;
+	border-radius: 20px 20px 0 0;
+}
+.div{
+	padding: 30px 50px;
+	border-radius: 20px;
+	background-color: rgba(0,0,0,0.8);
+	flex-direction: column;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 90vh;
+	position: relative;
+}
+button{
+	margin-top: 5px;
+}
+.button_timer{
+	background-color: rgba(0,0,0,0.8);
+	border-radius: 20px;
+	padding: 25px;
+}
+.button_timer a{
+	width: 150px;
+}
+
+.timer{
+	display: flex;
+	margin-top: 20px;
+}
+.timer input {
+	width: 100px;
+	text-align: center;
+	background-color: transparent;
+	border: 0;
+	font-weight: bold;
+	color: white;
+	outline: 0;
+}
+.timer span{
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+.timer label{
+	position: absolute;
+	top: -10px;
+	font-size: 15px;
+	left: 0;
+	width: 100%;
+	z-index: 99;
+}
+#img{
+	display: none;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+}

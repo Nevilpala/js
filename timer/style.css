@@ -1,0 +1,74 @@
+/*STOPWATCH*/
+
+body{
+	/*background-color: rgb(214 244 160);*/
+	background-image: url(t.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	min-height: 100vh;
+	color: white;
+	overflow-x: hidden;
+	padding: 5vh;
+}
+.timer_title{
+	width: 100%;
+	padding: 10px;
+	border-radius: 20px 20px 0 0;
+}
+.div{
+	padding: 30px 50px;
+	border-radius: 20px;
+	background-color: rgba(0,0,0,0.8);
+	flex-direction: column;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 90vh;
+}
+.button_timer{
+	background-color: rgba(0,0,0,0.8);
+	border-radius: 20px;
+	padding: 25px;
+}
+.button_timer a{
+	width: 150px;
+}
+p.time span{
+	width: 100px;
+	text-align: center;
+	cursor: pointer;
+	user-select: none;
+}
+.time{
+	margin-top: 10px;
+	display: flex;
+}
+#logs{
+	padding: 15px;
+	height: 30vh!important;
+	width: 200px;
+	background-color: rgba(255,122,255,0.1);
+	overflow: auto;
+	overflow-x: hidden;
+}
+#logs::-webkit-scrollbar{
+	width: 5px;
+}
+#logs::-webkit-scrollbar-track{
+	background-color: rgba(0,0,0,0.2);
+	border-radius: 100px;
+}
+#logs::-webkit-scrollbar-thumb{
+	background-color: rgba(0,0,0,0.5);
+	border-radius: 100px;
+}
+button{
+	margin-top: 5px;
+}
+@media screen and (max-width: 768px){
+	.row{
+		justify-content: center!important;
+		align-items: center!important;
+	}
+}
