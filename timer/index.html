@@ -56,7 +56,7 @@
 								<p id="logs" class="mt-3 h5 "></p>
 							</div>
 						</div>
-						<div class="carousel-item">
+						<div class="carousel-item ">
 							<div class="div">
 									<button type="button" onclick="resetTimer()" id="img"><img src="hourglass.gif" class="text-center"  title="TIME OUT"></button>
 								<h1 class="display-2 fw-bold py-3 timer_title"><i class="far fa-clock"></i> TIMER</h1>
@@ -154,38 +154,41 @@
 
 	<!-- TIMER -->
 	<script type="text/javascript">
+		var clearTime;
+		let timeset;
+		let newh = 0;
+		let newm = 0;
+		let news= 0;
 		function timer(){
-			var s =		document.getElementById('sec').value	;
-			var m =		document.getElementById('min').value	;
-			var h =		document.getElementById('hr').value		;
 
-			if(s>59 || m>59 || h>24){
-				resetTimer();
-				alert("INCORECT INPUT");
-			}
+			s =		parseInt(document.getElementById('sec').value)	;
+			m =		parseInt(document.getElementById('min').value)	;
+			h =		parseInt(document.getElementById('hr').value)	;
 
-			else if(s<60){
-				if(s>0){
-					s--;
-				}
-				else if(m>0){
-					s=59;
-					m--;
-				}
-				else if(h>0){
-					m=60;
-					h--;
-				}
+			timeset = (h * 3600) + m * 60 + s;
+			temp = timeset;
 
-				document.getElementById('sec').value = s;
-				document.getElementById('min').value = m;
-				document.getElementById('hr').value	= h	;
+		
+			if(temp>0)
+				temp--;
 
-			}
-			if(s==0 && m==0 && h==0)
-			{
+
+			 news = Math.floor(temp % 60);
+			 newm = Math.floor((temp / 60)%60);
+			 newh = Math.floor(temp / 3600);
+
+			 if(news == "00"  && newh == "00"  && newh == "00"){
+				stopTimer();
 				document.getElementById('img').style.display = "block";
 			}
+
+				document.getElementById('hr').value	=  newh<10 ? "0" + newh : newh;
+				document.getElementById('min').value = newm<10 ? "0" + newm : newm;
+				document.getElementById('sec').value = news<10 ? "0" + news : news;
+
+
+
+
 		}
 		function startTimer(){
 			clearTime = setInterval(timer,1000);
