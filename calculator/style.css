@@ -5,11 +5,16 @@ body{
 	align-items: center;
 	color: white;
 	overflow: hidden;
+	background-image: url(bg.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
 }
 .calc{
 	height: auto;
 	background-color: black;
 	padding: 40px;
+	border-radius: 10px;
 }
 .calc tr{
 	width: 100%;
@@ -18,6 +23,7 @@ body{
 .calc td{
 	width: 70px;
 	border: 1px solid rgba(255,255,255,0.5);
+	border-radius: 5px;	
 	padding: 5px;
 	line-height: 40px;
 	height: 40px;
@@ -28,11 +34,20 @@ body{
 	user-select: none;
 
 }
-.op,.equal{
-	background-color: coral;
+td:not(#Ans,#ans,.op,#inputtxt):hover{
+	background-color: rgba(255,255,255,0.1)!important;
+}
+.op{
+	background-color: coral!important;
 }
 .op:hover,.equal:hover{
-	background-color: rgba(255,0,0,0.5);
+	background-color: rgba(255,0,0,0.5)!important;
+}
+#clear{
+	background-color: rgba(255,255,255,0.5);
+}
+#clear:hover{
+	background-color: rgba(255,0,0,0.8)!important;
 }
 .inputtext{
 	padding: 0!important;
@@ -55,15 +70,9 @@ input{
 #ans{
 	user-select: none;
 	cursor: not-allowed;
+	background-color: rgba(255,255,255,0.15);
 }
 #Ans{
 	user-select: none;
 	cursor: not-allowed;
-}
-#clear{
-	background-color: rgba(255,255,255,0.5);
-}
-td:hover{
-	background-color: rgba(255,255,255,0.1);
-
 }
