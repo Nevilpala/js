@@ -72,19 +72,23 @@
 								<p id="time" class="h1 timer">
 									<span>
 										<label for="hr">hh</label>
-										<input type="text" id="hr" title="Hour" value="00" pattern="[0-24]{2}">	
+										<input type="text" id="hr" title="Hour" placeholder="00">	
 									</span>
 									:
 									<span>
 										<label for="min">MM</label>
-										<input type="text" id="min" title="Minute" value="00" pattern="[0-60]{2}">
+										<input type="text" id="min" title="Minute" placeholder="00">
 									</span>
 									:
 									<span>
 										<label for="sec">SS</label>
-										<input type="text" value="00" id="sec" title="Second" pattern="[0-60]{2}">
+										<input type="text"  id="sec" title="Second" placeholder="00">
 									</span>
 								</p>
+								<div class="text-center text-muted">
+									<span class="display-2">&uarr;</span>
+									<h2>INPUT HERE</h2>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -98,10 +102,10 @@
 
 		var l = "";
 		function STOPWATCH(){	
-			var mis =	document.getElementById('sw_mili').innerHTML	;
-			var ss =		document.getElementById('sw_sec').innerHTML	;
-			var mm =		document.getElementById('sw_min').innerHTML	;
-			var hh =		document.getElementById('sw_hr').innerHTML	;
+			var mis =	document.getElementById('sw_mili').innerHTML;
+			var ss =	document.getElementById('sw_sec').innerHTML	;
+			var mm =	document.getElementById('sw_min').innerHTML	;
+			var hh =	document.getElementById('sw_hr').innerHTML	;
 
 			mis++;
 
@@ -156,9 +160,6 @@
 	<script type="text/javascript">
 		var clearTime;
 		let timeset;
-		let newh = 0;
-		let newm = 0;
-		let news= 0;
 		function timer(){
 
 			s =		parseInt(document.getElementById('sec').value)	;
@@ -185,12 +186,9 @@
 				document.getElementById('hr').value	=  newh<10 ? "0" + newh : newh;
 				document.getElementById('min').value = newm<10 ? "0" + newm : newm;
 				document.getElementById('sec').value = news<10 ? "0" + news : news;
-
-
-
-
 		}
 		function startTimer(){
+			
 			clearTime = setInterval(timer,1000);
 		}
 		function stopTimer(){
