@@ -30,6 +30,9 @@
 			<div class="col-lg-8">
 				<div id="timer-watch" class="carousel"> 
 					<div class="carousel-inner">
+
+						<!-- STOPWATCH -->
+
 						<div class="carousel-item active">
 							<div class="div">
 								
@@ -37,7 +40,7 @@
 								<hr class="opacity-100 w-100 mb-5">
 
 								<p class="btn-timer">	
-									<button class="btn btn-success" onclick="startSTOPWATCH()">START TIMER</button>
+									<button class="btn btn-success" onclick="startSTOPWATCH()" id="SW_disable">START TIMER</button>
 									<button class="btn btn-dark" onclick="logSTOPWATCH()">LOG TIMER</button>
 									<button class="btn btn-primary" onclick="stopSTOPWATCH()">STOP TIMER</button>
 									<button class="btn btn-danger" onclick="resetSTOPWATCH()">RESET TIMER</button>
@@ -56,14 +59,17 @@
 								<p id="logs" class="mt-3 h5 "></p>
 							</div>
 						</div>
-						<div class="carousel-item ">
+
+						<!-- TIMER -->
+
+						<div class="carousel-item">
 							<div class="div">
 									<button type="button" onclick="resetTimer()" id="img"><img src="hourglass.gif" class="text-center"  title="TIME OUT"></button>
 								<h1 class="display-2 fw-bold py-3 timer_title"><i class="far fa-clock"></i> TIMER</h1>
 								<hr class="opacity-100 w-100 mb-5">
 
 								<p class="btn-timer">	
-									<button class="btn btn-success" onclick="startTimer()">START TIMER</button>
+									<button  class="btn btn-success" id="StartTimimg" onclick="startTimer()" >START TIMER</button>
 									<button class="btn btn-primary" onclick="stopTimer()">STOP TIMER</button>
 									<button class="btn btn-danger" onclick="resetTimer()">RESET TIMER</button>
 
@@ -72,17 +78,17 @@
 								<p id="time" class="h1 timer">
 									<span>
 										<label for="hr">hh</label>
-										<input type="text" id="hr" title="Hour" placeholder="00">	
+										<input type="text" id="hr" title="Hour" value="00">	
 									</span>
 									:
 									<span>
 										<label for="min">MM</label>
-										<input type="text" id="min" title="Minute" placeholder="00">
+										<input type="text" id="min" title="Minute" value="00">
 									</span>
 									:
 									<span>
 										<label for="sec">SS</label>
-										<input type="text"  id="sec" title="Second" placeholder="00">
+										<input type="text"  id="sec" title="Second" value="00">
 									</span>
 								</p>
 								<div class="text-center text-muted">
@@ -101,6 +107,7 @@
 	<script type="text/javascript">
 
 		var l = "";
+		var SW_disables = document.getElementById('SW_disable');
 		function STOPWATCH(){	
 			var mis =	document.getElementById('sw_mili').innerHTML;
 			var ss =	document.getElementById('sw_sec').innerHTML	;
@@ -133,9 +140,11 @@
 		}
 		function startSTOPWATCH(){
 			cleartime = setInterval(STOPWATCH,10);
+			SW_disables.disabled = true;
 		}
 		function stopSTOPWATCH(){
 			clearInterval(cleartime);
+			SW_disables.disabled = false;
 		}
 		function resetSTOPWATCH()
 		{
@@ -160,6 +169,8 @@
 	<script type="text/javascript">
 		var clearTime;
 		let timeset;
+		var timestart = document.getElementById('StartTimimg');
+
 		function timer(){
 
 			s =		parseInt(document.getElementById('sec').value)	;
@@ -188,11 +199,14 @@
 				document.getElementById('sec').value = news<10 ? "0" + news : news;
 		}
 		function startTimer(){
-			
+
 			clearTime = setInterval(timer,1000);
+			timestart.disabled = true;
 		}
 		function stopTimer(){
 			clearInterval(clearTime);
+
+			timestart.disabled = false;
 		}
 		function resetTimer(){
 			s="00";
@@ -203,6 +217,7 @@
 			document.getElementById('min').value = m;
 			document.getElementById('hr').value	= h	;
 			stopTimer();
+
 		}
 
 	</script>
