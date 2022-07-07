@@ -56,7 +56,7 @@
 									:
 									<span id="sw_mili" title="">00</span>
 								</p>
-								<p id="logs" class="mt-3 h5 "></p>
+								<p id="logs" class="mt-3 h5 text-center"></p>
 							</div>
 						</div>
 
@@ -64,7 +64,7 @@
 
 						<div class="carousel-item">
 							<div class="div">
-									<button type="button" onclick="resetTimer()" id="img"><img src="hourglass.gif" class="text-center"  title="TIME OUT"></button>
+								<button type="button" onclick="resetTimer()" id="img" class="bg-white"><img src="hourglass.gif" class="text-center"  title="TIME OUT"></button>
 								<h1 class="display-2 fw-bold py-3 timer_title"><i class="far fa-clock"></i> TIMER</h1>
 								<hr class="opacity-100 w-100 mb-5">
 
@@ -97,6 +97,7 @@
 								</div>
 							</div>
 						</div>
+
 					</div>
 				</div>
 			</div>
@@ -109,34 +110,33 @@
 		var l = "";
 		var SW_disables = document.getElementById('SW_disable');
 		function STOPWATCH(){	
-			var mis =	document.getElementById('sw_mili').innerHTML;
-			var ss =	document.getElementById('sw_sec').innerHTML	;
-			var mm =	document.getElementById('sw_min').innerHTML	;
-			var hh =	document.getElementById('sw_hr').innerHTML	;
+			var mis =	parseInt(document.getElementById('sw_mili').innerHTML);
+			var ss =	parseInt(document.getElementById('sw_sec').innerHTML)	;
+			var mm =	parseInt(document.getElementById('sw_min').innerHTML)	;
+			var hh =	parseInt(document.getElementById('sw_hr').innerHTML)	;
 
 			mis++;
 
-			if(mis>99){
-				mis=0;
+			if(mis == 100){
 				ss++;
+				mis=0;
 			}
 
-			else if(ss>=59){
-				ss=0;
+			else if(ss==60){
 				mm++;
+				ss=0;
 
 			}
 
-			else if(mm>=59){
-				mm=0;
+			else if(mm == 60){
 				hh++;
+				mm=0;
 			}
 
-
-			document.getElementById('sw_mili').innerHTML= mis;	
-			document.getElementById('sw_sec').innerHTML= ss;
-			document.getElementById('sw_min').innerHTML= mm;
-			document.getElementById('sw_hr').innerHTML	= hh;
+			document.getElementById('sw_mili').innerHTML = 	mis <10 ? "0" + mis : mis;
+			document.getElementById('sw_sec').innerHTML  = 	ss  <10 ? "0" + ss 	: ss;
+			document.getElementById('sw_min').innerHTML  =	mm 	<10 ? "0" + mm 	: mm;
+			document.getElementById('sw_hr').innerHTML  =  	hh 	<10 ? "0" + hh 	: hh;
 		}
 		function startSTOPWATCH(){
 			cleartime = setInterval(STOPWATCH,10);
@@ -148,6 +148,7 @@
 		}
 		function resetSTOPWATCH()
 		{
+			l="";
 			document.getElementById('sw_mili').innerHTML="00";
 			document.getElementById('sw_sec').innerHTML = "00";
 			document.getElementById('sw_min').innerHTML= "00";
@@ -157,9 +158,9 @@
 			stopSTOPWATCH();
 		}
 		function logSTOPWATCH(){
-			logtimers = document.getElementById('sw').innerHTML;
-			l += logtimers + " <br>";
-			l.replace(":"," : ")
+			logtimers = document.getElementById('sw').innerHTML;	
+			l += logtimers + "<br>";
+			l.replace(":"," : ");
 			document.getElementById('logs').innerHTML = l;	
 		}
 	</script>

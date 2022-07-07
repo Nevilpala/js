@@ -61,7 +61,6 @@ p.time{
 p.time span{
 	width: 100px;
 	text-align: center;
-	cursor: pointer;
 	user-select: none;
 }
 
@@ -137,7 +136,7 @@ p.time span{
 		width: 50px;
 	}
 	.div{
-		height: auto;
+		height: auto!important;
 		padding: 20px 0;
 	}
 	.btn-timer{
