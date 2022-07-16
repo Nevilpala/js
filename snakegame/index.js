@@ -1,3 +1,4 @@
+
 var snake = document.getElementById('snake');
 var box = document.getElementById('box');
 var boomimg = document.getElementById('boom-img');
@@ -29,6 +30,11 @@ var posy = 200;
 
 var life = 3;
 var scores = 0;
+
+
+// body.style.cursor = 'none';
+
+
 function snakeGameStart(){
 
 	foodposX = parseInt(Math.floor((Math.random()*screen.availWidth)));
@@ -50,7 +56,7 @@ var bombX = 0;
 var bombY = 0;
 
 function boom(){
-	clearboom = setInterval(bombmaker,10000);
+	clearboom = setInterval(bombmaker,8000);
 }
 
 function bombmaker(){
@@ -60,7 +66,8 @@ function bombmaker(){
 	bombY = parseInt(Math.floor((Math.random()*screen.availHeight - 400)));
 
 	if(bombX<=50 && bombY<=50){
-		boomimg.style.display = "none";
+		boomimg.style.left = "-" + 100 + "px";
+	 	boomimg.style.top  = "-" + 100 + "px";
 	}
 	else{
 		boomimg.style.left = bombX + "px";
