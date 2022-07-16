@@ -19,23 +19,20 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 
 	<!-- ICON -->
-	<link rel="icon" type="image/icon type" href="./img/snake.png">
-
-	
+	<link rel="icon" type="image/icon type" href="./img/snake.png">	
 	<title>Snake Game</title>
 </head>
-<body onload="snakevibrateStart()">
+<body onload="snakeGameStart()">
 	<div class="box-container">
 		<div class="box" id="box">
 			<img src="./img/snake2.png" id="snake">
-
 			<img src="./img/food.png" id="food">
+			<img src="./img/bomb.png" id="boom-img">
 		</div>
 		<div class="toggle">
 			<div class="row justify-content-center">
-				<div class="col-2">
+				<div class="col-md-3 col-lg-2">
 					<div class="row justify-content-center text-center">
-
 						<div class="col-12">
 							<button class="btn-toggle" onclick="moveUpStart()">up</button>
 						</div>
@@ -44,9 +41,7 @@
 							<button class="btn-toggle" onclick="moveLeftStart()">Left</button>
 						</div>
 
-						<div class="col-4"></div>
-
-						<div class="col-4"> 
+						<div class="ms-auto col-4"> 
 							<button class="btn-toggle" onclick="moveRightStart()">Right</button>
 						</div>
 
@@ -56,6 +51,41 @@
 					</div>
 				</div>
 			</div>
+		</div>
+		<div class="top-view m-0 p-0 row align-items-center justify-content-between">	
+			<div class="col-auto life">
+				<div class="lifeimg" id="lifeline">
+					<img src="./img/life.png" class="heartimg img-fluid ">
+					<img src="./img/life.png" class="heartimg img-fluid ">
+					<img src="./img/life.png" class="heartimg img-fluid ">
+					<img src="./img/life.png" class="heartimg img-fluid ">
+					<img src="./img/life.png" class="heartimg img-fluid ">
+				</div>
+			</div>
+			<div class="ms-lg-auto col-auto">
+				<button class="btn btn-secondary" onclick="pause()">l l</button>
+			</div>
+			<div class="col-auto result">
+				<div class="scorecount d-flex align-items-center">
+					<span class="">SCORE :</span>
+					<input type="button" value="0" id="score">
+				</div>
+			</div>
+		</div>
+		<div class="showscoreincrement" id="overlay-score"></div>
+	</div>
+	<div class="pause menu" id="pause">
+		<div class="pause-menu menu-body shadow-lg">
+			<div class="row g-2 justify-content-evenly text-center align-items-center	">
+				<div class="col-12"><img src="./img/logo.png"></div>
+				<div class="col-5"><button class="btn btn-menu w-100" title="PLAY" onclick="resume()"><i class="fas fa-play pe-2"></i> RESUME</button></div>
+				<div class="col-5"><button class="btn btn-menu w-100" title="RESTART" onclick="NewGame()"><i class="fas fa-redo-alt pe-2"></i>New Game</button></div>
+			</div>
+		</div>
+	</div>
+	<div class="gameover menu" id="gameover">
+		<div class="menu-body shadow-lg text-center	gameover-img">
+			<p onclick="NewGame()">CLICK HERE TO PLAY AGAIN</p>
 		</div>
 	</div>
 
