@@ -31,7 +31,6 @@ var life = 3;
 var scores = 0;
 function snakeGameStart(){
 
-
 	foodposX = parseInt(Math.floor((Math.random()*screen.availWidth)));
 	foodposY = parseInt(Math.floor((Math.random()*screen.availHeight)));
 
@@ -55,83 +54,82 @@ function boom(){
 }
 
 function bombmaker(){
-	scoreboard();
 	boomimg.style.display = 'block';
 
 	bombX = parseInt(Math.floor((Math.random()*screen.availWidth - 400)));
 	bombY = parseInt(Math.floor((Math.random()*screen.availHeight - 400)));
 
+	if(bombX<=50 && bombY<=50){
+		boomimg.style.display = "none";
+	}
+	else{
 		boomimg.style.left = bombX + "px";
-		boomimg.style.top  = bombY + "px";
-
-}
-
+	 	boomimg.style.top  = bombY + "px";
+	}
+	scoreboard();
+ }
 function restartGame(){
-	boomimg.src="./img/bomb.png";
+
+	resetbomb();
+
 	posx = 200;
 	posy = 200;
 	snake.style.left = posx + 'px';
 	snake.style.top = posy + 'px';
 	snake.style.transform = "scaleX(-1)";
-	clearallInterval();
-	clearkeyboolean();
+
+	stopallInterval();
+	releasearrowkeylock();
+
 	for(i=0;i<btn.length;i++){
 		btn[i].disabled = false;
 	}
 }
 
 function moveUpStart(){
-	clearallInterval();
-
+	stopallInterval();
 	clearUp = setInterval(moveUp,8);
+
+	btnDisabled();
 	btn[0].disabled = true;
-	btn[1].disabled = false;
-	btn[2].disabled = false;
-	btn[3].disabled = false;
 
 
 }
 
 function moveLeftStart(){
-	clearallInterval();
+	stopallInterval();
 
 	clearLeft = setInterval(moveLeft,8);
 
-	btn[0].disabled = false;
+	btnDisabled();
 	btn[1].disabled = true;
-	btn[2].disabled = false;
-	btn[3].disabled = false;
 
 }
 
 function moveRightStart(){
-	clearallInterval();
+	stopallInterval();
 	clearRight = setInterval(moveRight,8);
 
-	btn[0].disabled = false;
-	btn[1].disabled = false;
+	btnDisabled()
 	btn[2].disabled = true;
-	btn[3].disabled = false;
 }
 
 function moveDownStart(){
-	clearallInterval();
-
+	stopallInterval();
 	clearDown = setInterval(moveDown,8);
-
-
-	clearkeyboolean();
+	
+	btnDisabled();
 	btn[3].disabled = true;
-
 }
-
-
-
-
+function btnDisabled(){
+	for(i=0;i<btn.length;i++){
+		btn[i].disabled = false;
+	}
+}
+// MOVERIGHT
 function moveRight(){
 	if (posx >=0   && posx <= screen.availWidth - 200){
 		posx++;
-
 
 		scoreboard();
 		snake.style.transform = "scaleX(-1) rotate(0deg)"
@@ -142,6 +140,7 @@ function moveRight(){
 	}
 	
 }
+// MOVELEFT
 function moveLeft(){
 	if (posx >= 0){
 		posx--;
@@ -156,6 +155,7 @@ function moveLeft(){
 	}
 
 }
+// MOVEUP
 function moveUp(){
 	if (posy >= 50 ){
 		posy--;
@@ -170,6 +170,7 @@ function moveUp(){
 
 
 }
+// MOVEDOWN
 function moveDown(){
 	if (posy >= 50 && posy <= screen.availHeight - 275){
 		posy++;
@@ -183,58 +184,57 @@ function moveDown(){
 	}
 
 }
-function clearallInterval(){
+// STOP ALL INTERTRVAL
+function stopallInterval(){
 	clearInterval(clearLeft);
 	clearInterval(clearDown);
 	clearInterval(clearRight);
 	clearInterval(clearUp);
 }
-function clearkeyboolean(){
+
+let l = 0;
+let r = 0;
+let u = 0;
+let d = 0;
+
+function releasearrowkeylock(){
 	l=0;
 	r=0;
 	u=0;
 	d=0;
 }
-function unclearkeyboolean(){
+function arrowkeylock(){
 	l=1;
 	r=1;
 	u=1;
 	d=1;
 }
-function allpostion(){
-
-	console.log((foodposX -  50),(foodposX + 50),posx, (foodposY - 50),(foodposY + 50),posy);
-}
-let l = 0;
-let r = 0;
-let u = 0;
-let d = 0;
 window.addEventListener('keydown', function(e) {
 	switch (e.keyCode) {
 		case 32:
 		case 27:	
 				pause();
-				clearallInterval();
+				stopallInterval();
 				clearInterval(clearboom);
 			break;
 		case 37:
 			if(l==0){
 				moveLeftStart();
-				clearkeyboolean();
+				releasearrowkeylock();
 				l=1;			
 			}
 			break;
 		case 38:
 			if(u==0){
 				moveUpStart();
-				clearkeyboolean();
+				releasearrowkeylock();
 				u=1;
 			}
 			break;
 		case 39:
 			if(r==0){
 	        	moveRightStart();
-				clearkeyboolean();
+				releasearrowkeylock();
 
 				r=1;
 			}
@@ -242,9 +242,7 @@ window.addEventListener('keydown', function(e) {
 		case 40:
 			if(d==0){
 	       		moveDownStart();	
-
-				clearkeyboolean();
-
+				releasearrowkeylock();
 				d=1;	
 			}
        		break;
@@ -258,26 +256,29 @@ var count =0;
 function scoreboard(){
 
 	if((bombX -  80) < posx && (bombX + 80) > posx && (bombY - 50) < posy && (bombY + 50) > posy){
-		count--;
-		boomimg.src = "./img/blast.gif";
-		score.value = count;
-		clearallInterval();
-		delaytime();
+		boomblast();
+		delaytime(lifecount,1000);
 	}
 	if((foodposX -  80) < posx && (foodposX + 50) > posx && (foodposY - 50) < posy && (foodposY + 50) > posy){
 		snakeGameStart();
-
 		overlayScore('+2');
 		count+=2;
 		score.value = count;
 	}
 }
-function delaytime(){
-	setTimeout(lifecount,2500);
+function boomblast(){
+	boomimg.src = "./img/blast.gif";
+}
+function resetbomb(){
+	boomimg.src = "./img/bomb.png";
+}
+function delaytime(functionname,entertimedelay){
+	arrowkeylock();
+	stopallInterval();
+	setTimeout(functionname,entertimedelay);
 }
 function overlayScore(n){
 	showScore.innerHTML = "<p id='displayscore'></p>";
-
 	var displayscore = document.getElementById('displayscore');
 
 	if(n == '-1'){
@@ -290,31 +291,33 @@ var lifeline = 5;
 var heart = document.getElementsByClassName('heartimg');
 function lifecount(){
 
+	score.value = --count;
 	boomimg.style.display = 'none';
-
 	lifeline--;
 	overlayScore('-1');
-	if(lifeline<5 && lifeline>0){
-		restartGame();
-		clearallInterval();
-		clearkeyboolean();
+	stopallInterval();
+	arrowkeylock();
+	if(lifeline < 5 && lifeline > 0){
+		delaytime(restartGame,1200);
 		heart[lifeline].style.filter = "grayscale(1)";
 	}
-	else if(lifeline == 0){
+	if(lifeline == 0){
+		heart[lifeline].style.filter = "grayscale(1)";
 		gameover.style.display = 'block';	
 	}
 
 
 }
+
 function pause(){
 	pausemenu.style.display = "block";
-	clearallInterval();
-	unclearkeyboolean();
+	stopallInterval();
+	arrowkeylock();
 }
 
 function resume(){
 	pausemenu.style.display = "none";
-	clearkeyboolean();
+	releasearrowkeylock();
 	boom();
 }
 function NewGame(){
