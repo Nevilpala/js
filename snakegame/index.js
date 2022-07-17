@@ -277,7 +277,7 @@ function scoreboard(){
 
 	if((bombX -  80) < posx && (bombX + 80) > posx && (bombY - 50) < posy && (bombY + 50) > posy){
 		boomblast();
-		delaytime(lifecount,1000);
+		delaytime(lifecount,1200);
 	}
 	if((foodposX -  80) < posx && (foodposX + 50) > posx && (foodposY - 50) < posy && (foodposY + 50) > posy){
 		
