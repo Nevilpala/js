@@ -33,7 +33,7 @@ var scores = 0;
 var tempfood = "";
 
 function snakeGameStart(){
-	tempfood =  parseInt(Math.floor((Math.random()*5.5)));
+	tempfood =  parseInt(Math.floor((Math.random()*5.7)));
 	food.src = "./img/food"+tempfood+".png";
 	console.log(tempfood);
 
@@ -281,7 +281,7 @@ function scoreboard(){
 	}
 	if((foodposX -  80) < posx && (foodposX + 50) > posx && (foodposY - 50) < posy && (foodposY + 50) > posy){
 		
-		if(tempfood == 3){
+		if(tempfood == 5){
 			overlayScore('+5');
 			count+=5
 		}
