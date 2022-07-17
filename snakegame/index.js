@@ -15,16 +15,13 @@ var helpmenu = document.getElementById('help');
 var pausemenu = document.getElementById('pause');
 var gameover = document.getElementById('gameover');
 
-var clearVibrate = 0;
 var clearRight = "";
 var clearLeft = "";
 var clearUp = "";
 var clearDown = "";
 var clearboom = "";
 
-var vibrate = 0;
 
-var clearfood = "";
 
 var foodposX = 0;
 var foodposY = 0;
@@ -32,12 +29,11 @@ var foodposY = 0;
 var posx = 200;
 var posy = 200;
 
-var life = 3;
 var scores = 0;
 var tempfood = "";
 
 function snakeGameStart(){
-	tempfood =  parseInt(Math.floor((Math.random()*4)));
+	tempfood =  parseInt(Math.floor((Math.random()*5.5)));
 	food.src = "./img/food"+tempfood+".png";
 	console.log(tempfood);
 
