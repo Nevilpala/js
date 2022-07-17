@@ -1,13 +1,17 @@
 
 var snake = document.getElementById('snake');
-var box = document.getElementById('box');
+var food = document.getElementById('food');
+var stanby = document.getElementById('steadysnake');
+
 var boomimg = document.getElementById('boom-img');
 
+var box = document.getElementById('box');
 var btn = document.getElementsByClassName('btn-toggle');
-var food = document.getElementById('food');
+
 var score = document.getElementById('score');
 var showScore = document.getElementById('overlay-score');
 
+var helpmenu = document.getElementById('help'); 
 var pausemenu = document.getElementById('pause');
 var gameover = document.getElementById('gameover');
 
@@ -30,12 +34,13 @@ var posy = 200;
 
 var life = 3;
 var scores = 0;
-
-
-// body.style.cursor = 'none';
-
+var tempfood = "";
 
 function snakeGameStart(){
+	tempfood =  parseInt(Math.floor((Math.random()*4)));
+	food.src = "./img/food"+tempfood+".png";
+	console.log(tempfood);
+
 
 	foodposX = parseInt(Math.floor((Math.random()*screen.availWidth)));
 	foodposY = parseInt(Math.floor((Math.random()*screen.availHeight)));
@@ -48,15 +53,13 @@ function snakeGameStart(){
 	else{
 		snakeGameStart();
 	}
+
 }
-
 boom();
-
 var bombX = 0;
 var bombY = 0;
-
 function boom(){
-	clearboom = setInterval(bombmaker,8000);
+	clearboom = setInterval(bombmaker,10000);
 }
 
 function bombmaker(){
@@ -65,9 +68,9 @@ function bombmaker(){
 	bombX = parseInt(Math.floor((Math.random()*screen.availWidth - 400)));
 	bombY = parseInt(Math.floor((Math.random()*screen.availHeight - 400)));
 
-	if(bombX<=50 && bombY<=50){
-		boomimg.style.left = "-" + 100 + "px";
-	 	boomimg.style.top  = "-" + 100 + "px";
+	if(bombX<=75 && bombY<=75){
+		boomimg.style.left = -100 + "px";
+	 	boomimg.style.top  = -100 + "px";
 	}
 	else{
 		boomimg.style.left = bombX + "px";
@@ -76,7 +79,6 @@ function bombmaker(){
 	scoreboard();
  }
 function restartGame(){
-
 	resetbomb();
 
 	posx = 200;
@@ -203,6 +205,7 @@ let l = 0;
 let r = 0;
 let u = 0;
 let d = 0;
+let flag = 0;
 
 function releasearrowkeylock(){
 	l=0;
@@ -220,9 +223,8 @@ window.addEventListener('keydown', function(e) {
 	switch (e.keyCode) {
 		case 32:
 		case 27:	
-				pause();
+				pause(pausemenu);
 				stopallInterval();
-				clearInterval(clearboom);
 			break;
 		case 37:
 			if(l==0){
@@ -253,6 +255,21 @@ window.addEventListener('keydown', function(e) {
 				d=1;	
 			}
        		break;
+   		case 8:
+   			if(flag == 0){
+   				snake.src = './img/snake4.png';
+   				flag = 1;
+   			}
+   			else if(flag == 1){
+   				snake.src = './img/snake2.png';
+   				flag = 2;
+			}
+			else{
+				snake.src = './img/snake3.png';
+   				flag = 0;
+
+			}
+			break;
 	}
 });
 
@@ -267,18 +284,27 @@ function scoreboard(){
 		delaytime(lifecount,1000);
 	}
 	if((foodposX -  80) < posx && (foodposX + 50) > posx && (foodposY - 50) < posy && (foodposY + 50) > posy){
+		
+		if(tempfood == 3){
+			overlayScore('+5');
+			count+=5
+		}
+		else{
+			overlayScore('+2');
+			count+=2;
+		}
 		snakeGameStart();
-		overlayScore('+2');
-		count+=2;
 		score.value = count;
 	}
 }
+
 function boomblast(){
 	boomimg.src = "./img/blast.gif";
 }
 function resetbomb(){
 	boomimg.src = "./img/bomb.png";
 }
+
 function delaytime(functionname,entertimedelay){
 	arrowkeylock();
 	stopallInterval();
@@ -288,7 +314,7 @@ function overlayScore(n){
 	showScore.innerHTML = "<p id='displayscore'></p>";
 	var displayscore = document.getElementById('displayscore');
 
-	if(n == '-1'){
+	if(n < 0){
 		displayscore.style.color = 'rgba(255,0,0,0.8)';
 	}
 	displayscore.innerHTML = n;
@@ -296,34 +322,66 @@ function overlayScore(n){
 
 var lifeline = 5;
 var heart = document.getElementsByClassName('heartimg');
+
+
 function lifecount(){
 
-	score.value = --count;
-	boomimg.style.display = 'none';
+	if(score.value > 50 && score.value < 100){
+		count-=2;
+		overlayScore(-2);
+	}
+	else if(score.value >= 100 && score.value <150){
+		count-=3;
+		overlayScore(-3);
+	}
+	else if(score.value >= 150  && score.value < 200){
+		count-=5;
+		overlayScore(-5);
+	}
+	else if(score.value >= 200 ){
+		count-=10;
+		overlayScore(-10);
+	}
+	else{
+		count--;
+		overlayScore(-1);
+	}
+
+	score.value = count;
+
 	lifeline--;
-	overlayScore('-1');
+
 	stopallInterval();
 	arrowkeylock();
+
 	if(lifeline < 5 && lifeline > 0){
 		delaytime(restartGame,1200);
 		heart[lifeline].style.filter = "grayscale(1)";
 	}
-	if(lifeline == 0){
+	else if(lifeline == 0){
 		heart[lifeline].style.filter = "grayscale(1)";
 		gameover.style.display = 'block';	
 	}
 
 
+	bombX = -500;
+	bombY = -500;
+	boomimg.style.display = 'none';
+
+	clearInterval(clearboom);
+	delaytime(boom,1000);
 }
 
-function pause(){
-	pausemenu.style.display = "block";
+function pause(input){
+	clearInterval(clearboom);
 	stopallInterval();
 	arrowkeylock();
+	input.style.display = "block";
 }
 
 function resume(){
 	pausemenu.style.display = "none";
+	helpmenu.style.display = "none";
 	releasearrowkeylock();
 	boom();
 }
