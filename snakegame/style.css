@@ -9,7 +9,26 @@
 	border : 1px solid red;
 	user-select: none;
 }
+.countdown{
+	position: absolute;
+	z-index: 999;
+	top: 45%;
+	width: 100%;
+	text-align: center;
+	color: rgba(0,0,0,0.8);
+	display: none;
+	animation: count 1s infinite;
+	filter: drop-shadow(1px 1px 5px darkgreen);
+}
+@keyframes count{
+	0%{
+		transform: scale(0);
+	}
 
+	100%{
+		transform: scale(1);
+	}
+}
 #avatars{
 	display: block;
 }
@@ -44,7 +63,7 @@
 	z-index: 1;
 	top: 300px;
 	left: 1000px;
-	animation: zoominout 1s ease-in-out 0s infinite;
+	animation: zoominout 1.2s ease-in-out 0s infinite;
  	animation-fill-mode: both;
 	filter: drop-shadow(0.5px 0.5px 2px black);
 	/*transform-origin: left;*/
@@ -72,7 +91,12 @@
 	z-index: 999;
 	bottom: 25px;
 }
-
+@media screen and (max-width: 600px){
+	.toggle .row{
+		width: 70%!important;
+		margin: 0 auto;
+	}
+}
 .btn-toggle{
 	border :1px solid rgba(255,255,255,0.1);
 	padding: 5px 10px;
@@ -156,8 +180,7 @@
 	z-index: 999;
 }
 #displayscore{
-
-	animation: scoreshow 3s ease-in;
+	animation: scoreshow 1s ease-in;
 	animation-fill-mode: forwards;
 }
 
@@ -165,17 +188,8 @@
 	0%{
 		transform: scale(0.5);
 	}
-	25%{
-		transform: scale(0.75);
-	}
-	50%{
-		transform: scale(1);
-	}
-	75%{
-		transform: scale(1.3);
-	}
 	100%{
-		transform: scale(1.4);
+		transform: scale(1.5);
 		opacity: 0;
 	}
 }
@@ -245,19 +259,25 @@
 	height: 50px;
 	background: url(./img/play.png) no-repeat center;
 	background-size: 100% 100%;
+	opacity: 0.7;
 }
 .pause button:hover{
-	filter: invert(1);
 	color: white;
+	opacity: 1;
 }
 .pause-menu{
-	/*background-image: url(./img/grass2.jpg);*/
-	background-image: url(./img/bg2.jpg);
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
-	border: 1px solid black;	
+	border: 5px double rgba(255,255,255,0.15);	
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	filter: drop-shadow( 2px 2px 5px rgba(0,0,0,0.5));
+}
+.pause-menu img{
+	border: 2px dashed rgba(255,255,255,0.2);
+	border-radius: 20px;
+	max-width: 500px;
+	height: 200px;
+	filter: saturate(40%);
 }
 .btn-menu{
 	height: 50px;
@@ -315,4 +335,9 @@
 	border: 0;
 	font-weight: bolder!important;
 	font-size: 40px;
+}
+
+.w-50px{
+	width: 80px!important;
+	height: 80px!important;
 }

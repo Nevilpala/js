@@ -25,10 +25,14 @@
 </head>
 <body onload="snakeGameStart()">
 	<div class="box-container" >
+		<div class="countdown" id="countdown-menu">
+			<h1 class="display-1 fw-bold" id="countdown"></h1>
+		</div>
 		<div class="box" id="box">
 			<img src="./img/snake3.png" id="snake">
-			<img src="./img/food0.png" id="food">
+			<img id="food">
 			<img src="./img/bomb.png" id="boom-img">
+			<img src="./img/blast.gif" class="d-none"> <!-- FOR BUFFER IMG -->
 		</div>
 		<div class="toggle">
 			<div class="row justify-content-center">
@@ -80,8 +84,9 @@
 	</div>
 	<div class="menu pause" id="pause">
 		<div class="pause-menu menu-body shadow-lg">
-			<div class="row g-2 justify-content-evenly text-center align-items-center">
-				<div class="col-12"><img src="./img/logo.png"></div>
+			<div class="row g-3 justify-content-evenly text-center align-items-center">
+				<!-- <div class="col-12"><span class="display-6 fw-bold">PAUSED </span></div> -->
+				<div class="col-12"><img src="./img/images.jpg"></div>
 				<div class="col-5"><button class="btn btn-menu w-100" title="PLAY" onclick="resume()"><i class="fas fa-play pe-2"></i> RESUME</button></div>
 				<div class="col-5"><button class="btn btn-menu w-100" title="NEW GAME" onclick="NewGame()"><i class="fas fa-redo-alt pe-2"></i>NEW GAME</button></div>
 			</div>

@@ -1,11 +1,9 @@
 
 var snake = document.getElementById('snake');
 var food = document.getElementById('food');
-var stanby = document.getElementById('steadysnake');
 
 var boomimg = document.getElementById('boom-img');
 
-var box = document.getElementById('box');
 var btn = document.getElementsByClassName('btn-toggle');
 
 var score = document.getElementById('score');
@@ -33,9 +31,9 @@ var scores = 0;
 var tempfood = "";
 
 function snakeGameStart(){
-	tempfood =  parseInt(Math.floor((Math.random()*5.7)));
+	tempfood =  parseInt(Math.floor((Math.random()*5.5)));
+
 	food.src = "./img/food"+tempfood+".png";
-	console.log(tempfood);
 
 
 	foodposX = parseInt(Math.floor((Math.random()*screen.availWidth)));
@@ -49,20 +47,19 @@ function snakeGameStart(){
 	else{
 		snakeGameStart();
 	}
-
 }
 boom();
 var bombX = 0;
 var bombY = 0;
 function boom(){
-	clearboom = setInterval(bombmaker,10000);
+	clearboom = setInterval(bombmaker,12000);
 }
-
 function bombmaker(){
 	boomimg.style.display = 'block';
 
-	bombX = parseInt(Math.floor((Math.random()*screen.availWidth - 400)));
-	bombY = parseInt(Math.floor((Math.random()*screen.availHeight - 400)));
+	bombX = Math.abs(Math.floor((Math.random()*screen.availWidth - 400)));
+	bombY = Math.abs(Math.floor((Math.random()*screen.availHeight - 400)));
+
 
 	if(bombX<=75 && bombY<=75){
 		boomimg.style.left = -100 + "px";
@@ -85,10 +82,14 @@ function restartGame(){
 
 	stopallInterval();
 	releasearrowkeylock();
+	btnDisabled();
+}
 
-	for(i=0;i<btn.length;i++){
-		btn[i].disabled = false;
-	}
+
+function delaytime(functionname,entertimedelay){
+	arrowkeylock();
+	stopallInterval();
+	setTimeout(functionname,entertimedelay);
 }
 
 function moveUpStart(){
@@ -215,12 +216,21 @@ function arrowkeylock(){
 	u=1;
 	d=1;
 }
+let space = 0;
 window.addEventListener('keydown', function(e) {
 	switch (e.keyCode) {
+		case 27:
 		case 32:
-		case 27:	
+			if (space==0) {	
 				pause(pausemenu);
 				stopallInterval();
+				space = 1
+			}
+			else
+			{
+				resume();
+				space =  0;
+			}
 			break;
 		case 37:
 			if(l==0){
@@ -260,10 +270,13 @@ window.addEventListener('keydown', function(e) {
    				snake.src = './img/snake2.png';
    				flag = 2;
 			}
+			else if(flag == 2){
+   				snake.src = './img/snake1.png';
+   				flag = 3;
+			}
 			else{
 				snake.src = './img/snake3.png';
    				flag = 0;
-
 			}
 			break;
 	}
@@ -275,15 +288,15 @@ var count =0;
 
 function scoreboard(){
 
-	if((bombX -  80) < posx && (bombX + 80) > posx && (bombY - 50) < posy && (bombY + 50) > posy){
+	if((bombX -  70) < posx && (bombX + 55) > posx && (bombY - 50) < posy && (bombY + 50) > posy){
 		boomblast();
 		delaytime(lifecount,1200);
 	}
-	if((foodposX -  80) < posx && (foodposX + 50) > posx && (foodposY - 50) < posy && (foodposY + 50) > posy){
+	if((foodposX -  80) < posx && (foodposX + 55) > posx && (foodposY - 50) < posy && (foodposY + 50) > posy){
 		
 		if(tempfood == 5){
 			overlayScore('+5');
-			count+=5
+			count+=5;
 		}
 		else{
 			overlayScore('+2');
@@ -296,15 +309,13 @@ function scoreboard(){
 
 function boomblast(){
 	boomimg.src = "./img/blast.gif";
+	boomimg.style.width = 150+'px';
+	boomimg.style.height = 100+'px';
 }
 function resetbomb(){
+	boomimg.style.height = 50+'px';
+	boomimg.style.width = 100+'px';
 	boomimg.src = "./img/bomb.png";
-}
-
-function delaytime(functionname,entertimedelay){
-	arrowkeylock();
-	stopallInterval();
-	setTimeout(functionname,entertimedelay);
 }
 function overlayScore(n){
 	showScore.innerHTML = "<p id='displayscore'></p>";
@@ -313,7 +324,7 @@ function overlayScore(n){
 	if(n < 0){
 		displayscore.style.color = 'rgba(255,0,0,0.8)';
 	}
-	displayscore.innerHTML = n;
+	displayscore.innerHTML =n;
 }
 
 var lifeline = 5;
@@ -353,6 +364,7 @@ function lifecount(){
 	if(lifeline < 5 && lifeline > 0){
 		delaytime(restartGame,1200);
 		heart[lifeline].style.filter = "grayscale(1)";
+
 	}
 	else if(lifeline == 0){
 		heart[lifeline].style.filter = "grayscale(1)";
@@ -374,13 +386,17 @@ function pause(input){
 	arrowkeylock();
 	input.style.display = "block";
 }
+var clearCountDown = "";
+var countmenu = document.getElementById('countdown-menu');
+var countdown = document.getElementById('countdown');
 
-function resume(){
+function resume(){	
 	pausemenu.style.display = "none";
 	helpmenu.style.display = "none";
 	releasearrowkeylock();
 	boom();
 }
+
 function NewGame(){
 	window.location.reload();
 }
