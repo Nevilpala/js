@@ -12,6 +12,8 @@ var showScore = document.getElementById('overlay-score');
 var helpmenu = document.getElementById('help'); 
 var pausemenu = document.getElementById('pause');
 var gameover = document.getElementById('gameover');
+var highscore = document.getElementById('highscore');
+var highscoreDisplay = document.getElementById('highscoreDisplay');
 
 var clearRight = "";
 var clearLeft = "";
@@ -20,22 +22,36 @@ var clearDown = "";
 var clearboom = "";
 
 
+let temp = 0;
+var count =0;
 
 var foodposX = 0;
 var foodposY = 0;
+
+var bombX = 0;
+var bombY = 0;
 
 var posx = 200;
 var posy = 200;
 
 var scores = 0;
 var tempfood = "";
+var increment = 0;
+
+
+var lifeline = 5;
 
 function snakeGameStart(){
+ 	snake.style.display = "block";
+	food.style.display = "block";
+
 	tempfood =  parseInt(Math.floor((Math.random()*5.5)));
+	// console.log(tempfood);
 
 	food.src = "./img/food"+tempfood+".png";
-
-
+	foodmaker();
+}
+function foodmaker(){
 	foodposX = parseInt(Math.floor((Math.random()*screen.availWidth)));
 	foodposY = parseInt(Math.floor((Math.random()*screen.availHeight)));
 
@@ -45,12 +61,10 @@ function snakeGameStart(){
 		food.style.top  = foodposY + "px";
 	}
 	else{
-		snakeGameStart();
+		foodmaker();
 	}
 }
 boom();
-var bombX = 0;
-var bombY = 0;
 function boom(){
 	clearboom = setInterval(bombmaker,12000);
 }
@@ -71,7 +85,7 @@ function bombmaker(){
 	}
 	scoreboard();
  }
-function restartGame(){
+function recallGameSanke(){
 	resetbomb();
 
 	posx = 200;
@@ -135,7 +149,7 @@ function btnDisabled(){
 // MOVERIGHT
 function moveRight(){
 	if (posx >=0   && posx <= screen.availWidth - 200){
-		posx++;
+		posx+=1+increment;
 
 		scoreboard();
 		snake.style.transform = "scaleX(-1) rotate(0deg)"
@@ -149,7 +163,7 @@ function moveRight(){
 // MOVELEFT
 function moveLeft(){
 	if (posx >= 0){
-		posx--;
+		posx-=1+increment;
 
 		scoreboard();
 		snake.style.transform = "scaleX(1) rotate(0deg)"
@@ -164,7 +178,7 @@ function moveLeft(){
 // MOVEUP
 function moveUp(){
 	if (posy >= 50 ){
-		posy--;
+		posy-=1+increment;
 	scoreboard();
 
 		snake.style.transform = "rotate(90deg) scaleY(-1)";
@@ -179,7 +193,7 @@ function moveUp(){
 // MOVEDOWN
 function moveDown(){
 	if (posy >= 50 && posy <= screen.availHeight - 275){
-		posy++;
+		posy+=1+increment;
 	scoreboard();
 
 		snake.style.transform = "rotate(-90deg) scaleY(1)";	
@@ -202,7 +216,8 @@ let l = 0;
 let r = 0;
 let u = 0;
 let d = 0;
-let flag = 0;
+let flagimg = 0;
+let space = 0;
 
 function releasearrowkeylock(){
 	l=0;
@@ -216,7 +231,6 @@ function arrowkeylock(){
 	u=1;
 	d=1;
 }
-let space = 0;
 window.addEventListener('keydown', function(e) {
 	switch (e.keyCode) {
 		case 27:
@@ -224,7 +238,7 @@ window.addEventListener('keydown', function(e) {
 			if (space==0) {	
 				pause(pausemenu);
 				stopallInterval();
-				space = 1
+				space = 1;
 			}
 			else
 			{
@@ -262,29 +276,27 @@ window.addEventListener('keydown', function(e) {
 			}
        		break;
    		case 8:
-   			if(flag == 0){
+   			if(flagimg == 0){
    				snake.src = './img/snake4.png';
-   				flag = 1;
+   				flagimg = 1;
    			}
-   			else if(flag == 1){
+   			else if(flagimg == 1){
    				snake.src = './img/snake2.png';
-   				flag = 2;
+   				flagimg = 2;
 			}
-			else if(flag == 2){
+			else if(flagimg == 2){
    				snake.src = './img/snake1.png';
-   				flag = 3;
+   				flagimg = 3;
 			}
 			else{
 				snake.src = './img/snake3.png';
-   				flag = 0;
+   				flagimg = 0;
 			}
 			break;
 	}
 });
 
-
-let temp = 0;
-var count =0;
+let checkonetime = 0;
 
 function scoreboard(){
 
@@ -305,6 +317,40 @@ function scoreboard(){
 		snakeGameStart();
 		score.value = count;
 	}
+	if(score.value >= 50 && score.value < 100){
+		increment=0.15;
+	}
+	else if(score.value >= 100 && score.value < 125){
+		increment=0.25;
+	}
+	else if(score.value >= 125 && score.value < 150){
+		increment=0.3;
+	}
+	else if(score.value >= 150 && score.value < 175){
+		increment=0.4;
+	}
+	else if(score.value >= 175 && score.value < 200){
+		increment=0.5;
+	}
+	else if(score.value >= 200){
+		increment=0.6;
+	}
+	else if(score.value >= 300){
+		increment=0.8;
+	}
+	else{
+		increment=0;
+	}
+
+
+	if (checkonetime == 0) {
+		if(score.value > highscore.innerHTML && score.value >0 && highscore.innerHTML>0){
+			highscoreDisplay.style.display = 'block';
+			checkonetime++;
+		}
+	}
+
+
 }
 
 function boomblast(){
@@ -327,7 +373,6 @@ function overlayScore(n){
 	displayscore.innerHTML =n;
 }
 
-var lifeline = 5;
 var heart = document.getElementsByClassName('heartimg');
 
 
@@ -361,14 +406,18 @@ function lifecount(){
 	stopallInterval();
 	arrowkeylock();
 
-	if(lifeline < 5 && lifeline > 0){
-		delaytime(restartGame,1200);
+	if(lifeline == 5){
+		heart[lifeline].style.filter = "grayscale(0)";
+	}
+	else if(lifeline < 5 && lifeline > 0){
+		delaytime(recallGameSanke,1200);
 		heart[lifeline].style.filter = "grayscale(1)";
 
 	}
 	else if(lifeline == 0){
 		heart[lifeline].style.filter = "grayscale(1)";
 		gameover.style.display = 'block';	
+		// space = 1;
 	}
 
 
@@ -397,6 +446,44 @@ function resume(){
 	boom();
 }
 
+var highscorevalue = "";
+
+function Gameover(){
+	
+}
+
 function NewGame(){
-	window.location.reload();
+
+	pausemenu.style.display = "none";
+	helpmenu.style.display = "none";
+	gameover.style.display = "none";
+ 	food.style.display = "none";
+ 	snake.style.display = "none";
+
+	bombX = -500;
+	bombY = -500;
+	boomimg.style.display = 'none';
+ 	clearInterval(clearboom);
+ 	boom();
+
+	releasearrowkeylock();
+	stopallInterval();
+	resetbomb();
+
+ 	if(score.value > highscore.innerHTML && score.value > 0){
+		highscore.innerHTML = score.value;
+	}
+	checkonetime =0;
+ 	scores = 0;
+ 	count = 0;
+ 	score.value = 0;
+ 	snakeGameStart();
+ 	recallGameSanke();
+
+ 	lifeline=5;
+
+ 	for(i=0; i<heart.length;i++){
+		heart[i].style.filter = "grayscale(0)";
+
+ 	}
 }
