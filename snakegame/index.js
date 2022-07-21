@@ -23,30 +23,29 @@ var clearboom = "";
 
 
 let temp = 0;
-var count =0;
+let count =0;
 
-var foodposX = 0;
-var foodposY = 0;
+let foodposX = 0;
+let foodposY = 0;
 
-var bombX = 0;
-var bombY = 0;
+let bombX = 0;
+let bombY = 0;
 
-var posx = 200;
-var posy = 200;
+let posx = 200;
+let posy = 200;
 
-var scores = 0;
+let scores = 0;
 var tempfood = "";
-var increment = 0;
+let increment = 0;
 
 
-var lifeline = 5;
+let lifeline = 5;
 
 function snakeGameStart(){
  	snake.style.display = "block";
 	food.style.display = "block";
 
 	tempfood =  parseInt(Math.floor((Math.random()*5.5)));
-	// console.log(tempfood);
 
 	food.src = "./img/food"+tempfood+".png";
 	foodmaker();
@@ -56,7 +55,6 @@ function foodmaker(){
 	foodposY = parseInt(Math.floor((Math.random()*screen.availHeight)));
 
 	if(foodposX >=100 && foodposY >=100 && foodposX <= screen.availWidth-200  && foodposY <=screen.availHeight - 250 ){
-
 		food.style.left = foodposX + "px";
 		food.style.top  = foodposY + "px";
 	}
@@ -279,24 +277,35 @@ window.addEventListener('keydown', function(e) {
    			if(flagimg == 0){
    				snake.src = './img/snake4.png';
    				flagimg = 1;
+   				snakereset();
    			}
    			else if(flagimg == 1){
    				snake.src = './img/snake2.png';
    				flagimg = 2;
+   				snakereset();
 			}
 			else if(flagimg == 2){
    				snake.src = './img/snake1.png';
    				flagimg = 3;
+   				snakereset();
 			}
 			else{
 				snake.src = './img/snake3.png';
    				flagimg = 0;
+   				snakereset();
 			}
 			break;
 	}
 });
 
+function snakereset(){
+	snake.style.width = '140px';
+	snake.style.transform = 'scaleX(-1)'
+	snake.style.height = '50px';
+}
+
 let checkonetime = 0;
+
 
 function scoreboard(){
 
@@ -318,25 +327,25 @@ function scoreboard(){
 		score.value = count;
 	}
 	if(score.value >= 50 && score.value < 100){
-		increment=0.15;
+		increment=0.1;
 	}
 	else if(score.value >= 100 && score.value < 125){
-		increment=0.25;
+		increment=0.20;
 	}
 	else if(score.value >= 125 && score.value < 150){
-		increment=0.3;
+		increment=0.35;
 	}
 	else if(score.value >= 150 && score.value < 175){
-		increment=0.4;
+		increment=0.50;
 	}
 	else if(score.value >= 175 && score.value < 200){
-		increment=0.5;
+		increment=0.65;
 	}
 	else if(score.value >= 200){
-		increment=0.6;
+		increment=0.80;
 	}
 	else if(score.value >= 300){
-		increment=0.8;
+		increment=1;
 	}
 	else{
 		increment=0;
