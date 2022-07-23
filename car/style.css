@@ -15,13 +15,13 @@
 	justify-content: center;
 	position: relative;
 }
-.box{
+#game-container{
 	width: 400px;
 	height: 100vh;
 	background-image: url(./img/images2.png);
 	background-repeat: repeat-y;
 	background-size: cover;
-	animation: moving 0.25s ease  infinite;
+	animation: moving 0.3s ease-in-out  infinite;
 	animation-fill-mode: forwards;
 }
 @keyframes moving{
@@ -63,10 +63,41 @@
 	left: 0;
 
 }
-#life{
+.myrow{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	height: 50px;
 	position: absolute;
 	top: 0;
 	left: 0;
+}
+
+.pause img{
+	width: 50px;
+	height: 50px;
+	margin: 0 20px;	
+	background-color: white;
+	border-radius: 50%;
+	cursor: pointer;
+}
+.pause img:hover{
+	opacity: 0.8;	
+	filter: brightness(90%);
+}
+.highscore{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: monospace;
+	margin-left: 10px;
+	height: 50px;
+}
+#life{
+	/*position: absolute;*/
+	/*top: 0;*/
+	/*left: 0;*/
 	z-index: 10;
 	text-align: center;
 	line-height: 50px;
@@ -76,11 +107,36 @@
 	padding: 0 10px;
 	z-index: 999;
 }
+.score-menu{
+	/*position: absolute;*/
+	/*top: 0;*/
+	/*right: 0;*/
+	text-align: center;
+	line-height: 50px;	
+	color: red;
+	font-size: 25px;
+	padding: 0 10px;
+	z-index: 999;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+}
+.score-menu h1{
+
+}
+.score-menu span{
+	margin-left: 10px;
+	color: darkred;
+	font-size: 40px;
+	font-weight: bold;
+}
 #life img{
 	width: 25px;
 	height: 25px;
 }
-#gameover{
+.menu{
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -96,8 +152,9 @@
 	display: none;
 
 }
-#gameover div{
+#gameover div,.menu div{
 	border :1px solid rgba(255,255,255,0.1);
+	/*background-color: black;*/
 	position: relative;
 
 }
@@ -117,6 +174,7 @@
 	animation: over 1s ease infinite;
 	animation-fill-mode: both;
 }
+
 @keyframes over{
 	0%{
 		filter: brightness(0%);
@@ -135,4 +193,77 @@
 	100%{
 		filter: brightness(100%);
 	}
+}
+
+
+#star{
+	position: absolute;
+	z-index: 5;
+	top: 100px;
+	left: 0;
+	width: 30px;
+	margin-left: 15px;
+	animation: rotate 1s ease infinite;
+	animation-fill-mode: forwards;
+}
+
+@keyframes rotate{
+	0%{
+		transform:  rotateY(360deg);
+	}
+	50%{
+		transform: rotateY(0deg);
+	}
+	100%{
+		transform:  rotateY(360deg);
+	}
+}
+#overlayscore{
+	position: absolute;
+	z-index: 99;
+	bottom: 200px;
+	width: 100%;
+	text-align: center;	
+	font-weight: bold;
+	color: #FFFFFF;
+	font-size: 35px;
+
+}
+#over,.over{
+	position: relative;
+	z-index: 1;
+	animation: scoreshow 1s ease-in;
+	animation-fill-mode: forwards;
+}	
+#over img{
+	width: 40px;
+	height: 40px;
+}
+@keyframes scoreshow{
+	0%{
+		transform: scale(0.5);
+	}
+	100%{
+		transform: scale(1.5);
+		opacity: 0;
+	}
+}
+#pause-menu{
+	/*display: flex;*/
+}
+
+#pause-menu div{
+	padding: 50px;
+	background-color: rgba(0,0,0,0.3);
+}
+#showHighscore{
+	position: absolute;
+	z-index: 99;
+	top: calc(50% - 25px);
+	width: 100%;
+	text-align: center;
+	font-size: 50px;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: white;
 }

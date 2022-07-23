@@ -20,30 +20,51 @@
 
 
 	<!-- ICON -->
-	<!-- <link rel="icon" type="image/icon type" href="./img/images2.png">	 -->
+	<link rel="icon" type="image/icon type" href="./img/logo.png">	
 	<title>Car</title>
 </head>
-<body>
-	<div class="main ">
-		<div class="life" id="life">
-			<img src="./img/life.png" class="heartimg img-fluid ">
-			<img src="./img/life.png" class="heartimg img-fluid ">
-			<img src="./img/life.png" class="heartimg img-fluid ">
-			<img src="./img/life.png" class="heartimg img-fluid ">
-			<img src="./img/life.png" class="heartimg img-fluid ">
+<body onload="load()">
+	<div class="main">
+		<div class="myrow">
+			<div class="life" id="life">
+				<img src="./img/life.png" class="heartimg img-fluid ">
+				<img src="./img/life.png" class="heartimg img-fluid ">
+				<img src="./img/life.png" class="heartimg img-fluid ">
+				<img src="./img/life.png" class="heartimg img-fluid ">
+				<img src="./img/life.png" class="heartimg img-fluid ">
+			</div>
+			<div class="highscore"><h3>HIGHSCORE : </h5><span id="highscore" class="h2">00</span></div>
+			<div class="pause ms-auto"><img src="./img/pause.png" onclick="pausegame()"></div>
+			<div class="score-menu"><p class="h1" >Score :</p> <span id="score">00</span></div>
 		</div>
 		<div class="box" id="game-container">
 			<div id="road">
 				<img src="./img/car.png" id="car">
 				<img src="./img/tempcar.png" name="randomcar" class="randomcar" id="randomcar1">
-				<img src="./img/tempcar2.png" name="randomcar" class="randomcar" id="randomcar2">
-				<img src="./img/tempcar3.png" name="randomcar" class="randomcar" id="randomcar3">
+				<img src="./img/star.png" id="star">
 			</div>
 		</div>
-		<div id="gameover">
+		<div id="showHighscore"></div>
+		<div id="overlayscore"></div>
+		<div class="menu" id="gameover">
 			<div>
 				<img src="./img/gameover.jpg">
 				<p onclick="NewGame()">PLAY AGAIN</p>
+			</div>
+		</div>
+		<div class="menu" id="pause-menu">
+			<div class="text-center">
+				<h1 class="display-1 fw-bold text">
+					<span class="text-dark">P</span>
+					<span class="text-muted">A</span>
+					<span class="text-warning">U</span>
+					<span class="text-primary">S</span>
+					<span class="text-danger	">E</span>
+				</h1>
+				<p class="mt-5">
+					<button class="btn btn-success px-5" onclick="resume()">RESUME</button>
+					<button class="btn btn-success px-5" onclick="NewGame()">NEW GAME</button>
+				</p>
 			</div>
 		</div>
 	</div>
