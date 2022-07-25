@@ -161,7 +161,7 @@ function moveRight(){
 // MOVELEFT
 function moveLeft(){
 	if (posx >= 0){
-		posx-=1+increment;
+		posx-= 1+increment;
 
 		scoreboard();
 		snake.style.transform = "scaleX(1) rotate(0deg)"
@@ -277,32 +277,22 @@ window.addEventListener('keydown', function(e) {
    			if(flagimg == 0){
    				snake.src = './img/snake4.png';
    				flagimg = 1;
-   				snakereset();
    			}
    			else if(flagimg == 1){
    				snake.src = './img/snake2.png';
    				flagimg = 2;
-   				snakereset();
 			}
 			else if(flagimg == 2){
    				snake.src = './img/snake1.png';
    				flagimg = 3;
-   				snakereset();
 			}
 			else{
 				snake.src = './img/snake3.png';
    				flagimg = 0;
-   				snakereset();
 			}
 			break;
 	}
 });
-
-function snakereset(){
-	snake.style.width = '140px';
-	snake.style.transform = 'scaleX(-1)'
-	snake.style.height = '50px';
-}
 
 let checkonetime = 0;
 
@@ -326,17 +316,20 @@ function scoreboard(){
 		snakeGameStart();
 		score.value = count;
 	}
+	if(score.value >= 25 && score.value < 50){
+		increment=0.10;
+	}
 	if(score.value >= 50 && score.value < 100){
-		increment=0.1;
+		increment=0.25;
 	}
 	else if(score.value >= 100 && score.value < 125){
-		increment=0.20;
-	}
-	else if(score.value >= 125 && score.value < 150){
 		increment=0.35;
 	}
+	else if(score.value >= 125 && score.value < 150){
+		increment=0.45;
+	}
 	else if(score.value >= 150 && score.value < 175){
-		increment=0.50;
+		increment=0.55;
 	}
 	else if(score.value >= 175 && score.value < 200){
 		increment=0.65;
@@ -423,13 +416,18 @@ function lifecount(){
 		heart[lifeline].style.filter = "grayscale(1)";
 
 	}
-	else if(lifeline == 0){
+	else if(lifeline <= 0){
+		stopallInterval();
+		arrowkeylock();
 		heart[lifeline].style.filter = "grayscale(1)";
 		gameover.style.display = 'block';	
-		// space = 1;
+		space = 1;
+		const newgame = document.getElementById('NewGame');
+		window.addEventListener("keypress", function(e){
+			if (e.key === "Enter")
+				newgame.click();
+		});
 	}
-
-
 	bombX = -500;
 	bombY = -500;
 	boomimg.style.display = 'none';
@@ -457,11 +455,12 @@ function resume(){
 
 var highscorevalue = "";
 
-function Gameover(){
-	
-}
 
 function NewGame(){
+
+
+
+
 
 	pausemenu.style.display = "none";
 	helpmenu.style.display = "none";
