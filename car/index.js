@@ -15,13 +15,16 @@ let overlayscore = document.getElementById('overlayscore');
 let pause = document.getElementById('pause-menu');
 let highscore = document.getElementById('highscore');
 let showhighscore = document.getElementById('showHighscore');
+let starter = document.getElementById('starter');
+
 
 
 let ranx = 0 ;
 let rany = -150 ;
 
 let posx = 0;
-let posy = 0;
+let posy = screen.availHeight-195;
+carimg.style.top = posy + 'px';
 
 let starx = 0;
 let stary = 0;
@@ -29,6 +32,8 @@ let stary = 0;
 let l = true;
 let r = true;
 let e = true;
+let d = true;
+let u = true;
 let space = true;
 
 var clearstary = "";
@@ -37,9 +42,51 @@ var clearmovey = "";
 let lifeline = 5;
 let count = 0
 
+
+counter();
 function load(){
-	othercar();
-	starmaker();
+	box.style.animationPlayState = 'paused';
+	randomcar.style.display = "none";
+	star.style.display = "none";
+
+	setTimeout(othercar,4000);
+	setTimeout(starmaker,4000);
+	setTimeout(() => {
+	},4000);
+	preloder()
+}
+function preloder(){
+	const pre = document.getElementById('preload');
+	const create = document.createElement('img');
+	pre.appendChild(create);
+	let imgs = ["./img/star.png","./img/tempcar.png","./img/blast.gif"];
+	for(let i=0;i<imgs.length;i++){
+		create.src = imgs[i];
+		create.style.maxWidth = '100%';
+		create.style.height = '100%';
+	}
+	setTimeout(() => {
+		pre.removeChild(create)
+	},3000);
+}
+
+function moveUp(){
+	posy-=10;
+
+	if(posy<100){
+		posy = 100;
+	}
+	carimg.style.top = posy + 'px';
+
+}
+function moveDown(){
+	posy+=10;
+
+	if(posy > screen.availHeight-195){
+		posy = screen.availHeight-195;
+	}
+	carimg.style.top = posy + 'px';
+
 }
 
 function moveleft() {
@@ -49,6 +96,7 @@ function moveleft() {
 	}
 	carimg.style.left = posx + 'px';
 }
+
 function moveright() {
 	posx+=80;
 	if (posx > 240) {
@@ -57,24 +105,26 @@ function moveright() {
 	carimg.style.left = posx + 'px';
 }
 
-
 function keylock(){
-
 	l = false;
 	r = false;
+	u = false;
+	d = false;
 	e = false;
 	space = false;
-
 }
 function relasekeylock(){
 
 	l = true;
 	r = true;
+	u = true;
+	d = true;
 	e = true;
 	space = true;
 
 }
 function pausegame(){
+	keylock();
 	pause.style.display = 'flex';
 	clearInterval(clearmovey);
 	clearInterval(clearstary);
@@ -84,10 +134,34 @@ function pausegame(){
 function resume(){
 	pause.style.display = 'none';
 	gameover.style.display = 'none';
-	box.style.animationPlayState = '';
-	starmovey();
-	startmovey();
+	counter();
+	setTimeout(starmovey,4000);
+	setTimeout(startmovey,4000);
+}
 
+function counter(){
+	clearInterval(clearcounter)
+	keylock();
+	starter.style.display = 'none';
+	box.style.animationPlayState = 'paused';
+
+	let co = 3;
+	var clearcounter = setInterval(() => {
+		starter.innerHTML='<span class="counters">'+ co + '</span>';
+		if(co > 0){
+			starter.style.display = 'flex';	
+			co--;
+		}
+		else{
+			if(co == 0){
+				clearInterval(clearcounter);
+				relasekeylock();
+				starter.style.display = 'none';
+				box.style.animationPlayState = '';
+				co = 3;
+			}
+		}
+	},1000);
 }
 
 window.addEventListener('keydown', function(e) {
@@ -98,6 +172,7 @@ window.addEventListener('keydown', function(e) {
 		case 32: // SPACE
 			if(space){
 				pausegame();
+				keylock();
 				space = false;	
 			}
 			else{
@@ -116,7 +191,9 @@ window.addEventListener('keydown', function(e) {
 			}
 			break;
 		case 38: // UP ARROW
-			
+			if(u){
+				moveUp();
+			}
 			break;
 		case 39: // RIGHT ARROW
 			if(r){
@@ -124,15 +201,17 @@ window.addEventListener('keydown', function(e) {
 					carimg.style.transform = 'rotate(5deg)';
 					setTimeout(staightcar,50);
 				}
-
 				moveright();
 			}
 			break;
 		case 40: // DOWN ARROW
+			if(d){
+				moveDown();
+			}
        		break;
    		case 13:  // ENTER
 			if(e){
-				startmovey();
+				window.stop()
    			}
 			break;
 	}
@@ -163,7 +242,7 @@ function randomcarY(){
 
 
 function othercar(){
-
+	randomcar.style.display = 'block';
 	relasekeylock();
 	resetcar();
 		rany = -150;
@@ -192,7 +271,7 @@ function resetcar(){
 
 function scorecount(){
 	
-	 if((rany-50) < (screen.availHeight-125) && (rany+185) > (screen.availHeight-125) && posx == ranx){
+	 if((rany-125) < posy && (rany+120) > posy && posx == ranx){
 		clearInterval(clearmovey);
 		clearInterval(clearstary);
 		blastcar();
@@ -203,13 +282,13 @@ function scorecount(){
 		setTimeout(othercar,2000);
 		setTimeout(starmaker,1000);
 	}
-	if( (ranx-80) ==  posx && (rany+185) == (screen.availHeight-75)|| (ranx+80) == posx && (rany+185) == (screen.availHeight-75) ) {
+	if( (ranx-80) ==  posx && rany == posy|| (ranx+80) == posx && rany == posy ) {
 		count+=2;
 		overlayscores('+2');
 		score.innerHTML=count;
 	}
 
-	if((stary < screen.availHeight - 60) && (stary+185 > screen.availHeight - 60) && posx == starx){
+	if((stary-125 <posy) && (stary+50 > posy) && posx == starx){
 		clearInterval(clearstary);
 		star.style.display = 'none';
 		stary = -150;
@@ -239,7 +318,8 @@ function lifecount(){
 		else if(lifeline < 5 && lifeline > 0){
 			heart[lifeline].style.filter = "grayscale(1)";
 		}
-		else if(lifeline == 0){
+		else if(lifeline == 0){	
+			checklifes();
 			keylock();
 			box.style.animationPlayState = 'paused';
 			clearInterval(clearmovey);
@@ -270,6 +350,7 @@ function NewGame(){
 	}
 	clearInterval(clearmovey);
 	clearInterval(clearstary);	
+	clearInterval(checklife);	
 	starmaker();
 	othercar();
 }
@@ -316,4 +397,15 @@ function overlayscores(n){
 	overlayscore.innerHTML='<p id="over">'+n+'</p>';
 	}
 
+}
+var checklife = "";
+function checklifes(){
+	checklife = setInterval(() => {
+		if(lifeline <= 0){
+			keylock();
+			box.style.animationPlayState = 'paused';
+			clearInterval(clearmovey);
+			clearInterval(clearstary);
+		}
+	},1000);
 }

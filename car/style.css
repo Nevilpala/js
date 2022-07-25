@@ -1,6 +1,11 @@
 *{
 	user-select: none;
 }
+.vh-center{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 .main{
 	width: 100%;
 	height: 100vh;
@@ -20,16 +25,14 @@
 	height: 100vh;
 	background-image: url(./img/images2.png);
 	background-repeat: repeat-y;
-	background-size: cover;
-	animation: moving 0.3s ease-in-out  infinite;
+	/*background-repeat: no-repeat;*/
+	background-size: 100% 110%;
+	animation: moving 175ms ease  infinite;
 	animation-fill-mode: forwards;
 }
 @keyframes moving{
 	0%{
-		background-position: bottom;
-	}
-	50%{
-		background-position: center;
+		background-position:bottom;
 	}
 	100%{
 		background-position: top;
@@ -51,7 +54,7 @@
 	width: 60px;
 	height: 125px;
 	left: 0;
-
+	display: none;
 }
 
 #car{
@@ -205,6 +208,7 @@
 	margin-left: 15px;
 	animation: rotate 1s ease infinite;
 	animation-fill-mode: forwards;
+	display: none;
 }
 
 @keyframes rotate{
@@ -266,4 +270,31 @@
 	font-weight: bold;
 	text-transform: uppercase;
 	color: white;
+}
+#starter{
+	position: absolute;
+	z-index: 999;
+	/*top:calc(48% - 20px);*/
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	color: white;
+	font-weight: bold;
+}
+#counters,.counters{
+	font-size: 40px;
+	height: auto;
+	animation: scoreshow 1s ease 0s infinite;
+	animation-fill-mode: forwards;
+}
+
+#preload{
+	position: absolute;
+	top: -1000%;
+	/*left: 40%;*/
+	z-index:-9999;
+	width: 200px;
+	height: 100px;
 }
