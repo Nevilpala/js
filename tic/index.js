@@ -83,9 +83,7 @@ function scorecount(){
 				mat[0][2] = "bg-success";mat[1][1] = "bg-success"; mat[2][0]= "bg-success";
 				lock=1;
 			}
-			if(mat[i][j]!=""){
-				alert()
-			}
+			
 			matToTable();
 		}
 	}
