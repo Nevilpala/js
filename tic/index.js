@@ -103,6 +103,8 @@ function NewGame(){
 	}
 
 	flag =0;
+	p1.className += " active";
+        p2.classList.remove("active");
 	console.log(mat,td)
 }
 
