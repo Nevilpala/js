@@ -361,3 +361,14 @@
 	animation-fill-mode: forwards;
 	display: none;
 }
+
+#preload{
+	position: absolute;
+	top: -1050%;
+	/*top: 50%;*/
+	/*left: 40%;*/
+	z-index:-9999;
+	background-color: red;
+	width: 200px;
+	height: 100px;
+}

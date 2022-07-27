@@ -38,7 +38,7 @@ let scores = 0;
 var tempfood = "";
 let increment = 0;
 
-
+preloder();
 let lifeline = 5;
 
 function snakeGameStart(){
@@ -83,6 +83,25 @@ function bombmaker(){
 	}
 	scoreboard();
  }
+ function preloder(){
+	const pre = document.getElementById('preload');
+	const create = document.createElement('img');
+	pre.appendChild(create);
+	let imgs = ["./img/food0.png","./img/food1.png","./img/food2.png","./img/food3.png","./img/food4.png","./img/food5.png","./img/blast.gif"];
+	let i=0;
+	var clearload = setInterval(() => {
+		create.src = imgs[i];
+		create.style.maxWidth = '100%';
+		create.style.height = '100%';
+		i++;
+		if(i>=imgs.length){
+			clearInterval(clearload);
+		}
+	},2000)
+	setTimeout(() => {
+		pre.removeChild(create);
+	},20000);
+}
 function recallGameSanke(){
 	resetbomb();
 
@@ -202,6 +221,7 @@ function moveDown(){
 	}
 
 }
+
 // STOP ALL INTERTRVAL
 function stopallInterval(){
 	clearInterval(clearLeft);
