@@ -11,8 +11,6 @@
 	height: 100vh;
 	overflow: hidden;
 	background-color: rgba(0,255,0,0.5);
-	/*background-color: red;*/
-	/*background: url(./img/bg2.jpg) no-repeat center;*/
 	background-size: cover;
 
 	display: flex;
@@ -24,11 +22,10 @@
 	width: 400px;
 	height: 100vh;
 	background-image: url(./img/images2.png);
+	/*filter: brightness(50%);*/
 	background-repeat: repeat-y;
-	/*background-repeat: no-repeat;*/
 	background-size: 100% 110%;
 	animation: moving 175ms ease  infinite;
-	animation-fill-mode: forwards;
 }
 @keyframes moving{
 	0%{
@@ -40,11 +37,10 @@
 }
 #road{
 	width: calc(100% - 100px);
-	/*width: px;*/
 	height: 100%;
-	/*background-color: rgba(255,0,0,0.5);*/
 	margin: 0 50px;
 	position: relative;
+	z-index: 1;
 }
 
 .randomcar{
@@ -257,14 +253,45 @@
 }
 
 #pause-menu div{
-	padding: 50px;
-	background-color: rgba(0,0,0,0.3);
+	background-color: black;
+	position: relative;
+}
+#pause-menu img{
+	width: 400px;
+}
+@media screen and (max-width: 600px){
+	#pause-menu img{
+		min-width: 300px;
+	}
+	#pause-menu p{
+		flex-direction: column;
+		bottom: 0;
+		padding: 0;
+		margin: 0;
+	}
+	#pause-menu p > *{
+		flex: 0 0 auto;
+		width: 80%;
+	}
+}
+#pause-menu p{
+	position: absolute;
+	bottom: 10%;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;	
 }
 #showHighscore{
 	position: absolute;
 	z-index: 99;
-	top: calc(50% - 25px);
-	width: 100%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: auto;
 	text-align: center;
 	font-size: 50px;
 	font-weight: bold;
@@ -275,16 +302,16 @@
 	position: absolute;
 	z-index: 999;
 	/*top:calc(48% - 20px);*/
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	/*width: 100%;*/
 	text-align: center;
 	color: white;
 	font-weight: bold;
 }
 #counters,.counters{
-	font-size: 40px;
+	font-size: 100px;
 	height: auto;
 	animation: scoreshow 1s ease 0s infinite;
 	animation-fill-mode: forwards;

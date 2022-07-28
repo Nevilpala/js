@@ -28,6 +28,7 @@ carimg.style.top = posy + 'px';
 
 let starx = 0;
 let stary = 0;
+let incre = 0;
 
 let l = true;
 let r = true;
@@ -35,6 +36,7 @@ let e = true;
 let d = true;
 let u = true;
 let space = true;
+let flagimg = 0;
 
 var clearstary = "";
 var clearmovey = "";
@@ -51,9 +53,7 @@ function load(){
 
 	setTimeout(othercar,4000);
 	setTimeout(starmaker,4000);
-	setTimeout(() => {
-	},4000);
-	preloder()
+	preloder();
 }
 function preloder(){
 	const pre = document.getElementById('preload');
@@ -142,18 +142,16 @@ function resume(){
 function counter(){
 	clearInterval(clearcounter)
 	keylock();
-	starter.style.display = 'none';
 	box.style.animationPlayState = 'paused';
 
 	let co = 3;
 	var clearcounter = setInterval(() => {
 		starter.innerHTML='<span class="counters">'+ co + '</span>';
-		if(co > 0){
+		if(co >= 0){
 			starter.style.display = 'flex';	
 			co--;
-		}
-		else{
-			if(co == 0){
+
+			if(co < 0){
 				clearInterval(clearcounter);
 				relasekeylock();
 				starter.style.display = 'none';
@@ -209,10 +207,20 @@ window.addEventListener('keydown', function(e) {
 				moveDown();
 			}
        		break;
-   		case 13:  // ENTER
-			if(e){
-				window.stop()
+   		case 8:  // backspace
+			
+   			if(flagimg == 0){
+   				carimg.src = './img/car3.png';
+   				flagimg = 1;
    			}
+   			else if(flagimg == 1){
+   				carimg.src = './img/car2.png';
+   				flagimg = 2;
+			}
+			else{
+				carimg.src = './img/car.png';
+   				flagimg = 0;
+			}
 			break;
 	}
 });
@@ -228,7 +236,7 @@ function startmovey(){
 	clearmovey = setInterval(randomcarY,10);	
 }
 function randomcarY(){
-	rany+=1;
+	rany+=1+incre;
 	randomcar.style.top = rany + 'px';
 
 	if(rany >= screen.availHeight && lifeline >0){
@@ -307,6 +315,38 @@ function scorecount(){
 		setTimeout(() => {showHighscore.style.display = 'none';},2000);
 	}
 
+	if(count >=30&& count<50){
+		incre=0.1
+	}
+	else if(count >=50 && count<75){
+		incre=0.2
+	}
+	else if(count >=75 && count<100){
+		incre=0.3
+	}
+	else if(count >=100 && count<125){
+		incre=0.6
+	}
+	else if(count >=125 && count<150){
+		incre=0.75
+	}
+	else if(count >=150 && count<175){
+		incre=1
+	}
+	else if(count >=175 && count<250){
+		incre=1.15
+	}
+	else if(count >=250 && count<300){
+		incre=1.25
+	}
+	else if(count >=300){
+		incre=1.5
+	}
+	else{
+		incre=0;
+	}
+
+
 }
 var flag = true;
 function lifecount(){
@@ -337,13 +377,24 @@ function lifecount(){
 
 function NewGame(){
 	relasekeylock();
+	counter()
 	pause.style.display = 'none';
 	gameover.style.display = 'none';
-	lifeline = 5;
+	lifeline = 5;	
+	posx=0;
+	posy = screen.availHeight-195;
+	carimg.style.top = posy + 'px';
+	carimg.style.left = posx + 'px';
+
+
 	flag=true;
-	if (count >0)
+
+	if (count >0 && highscore.innerHTML<count ){
 		highscore.innerHTML =count <10 ? '0'+count : count;
+		hslock=1;
+	}
 	count = 0;
+	flagimg = 0;
 	score.innerHTML = 0;
 	for(let i=0; i<heart.length;i++){
 		heart[i].style.filter = "grayscale(0)";
@@ -351,10 +402,11 @@ function NewGame(){
 	clearInterval(clearmovey);
 	clearInterval(clearstary);	
 	clearInterval(checklife);	
-	starmaker();
-	othercar();
-}
 
+	setTimeout(starmaker,4000);
+	setTimeout(othercar,4000);
+}
+var hslock = 0;
 
 function starmaker(){
 
@@ -377,7 +429,7 @@ function starmovey(){
 }
 
 function starymove(){
-	stary+=1	;
+	stary+=1+incre;
 	star.style.top = stary + 'px';
 
 	if(stary >= screen.availHeight){
