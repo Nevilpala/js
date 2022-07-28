@@ -59,14 +59,14 @@ function preloder(){
 	const pre = document.getElementById('preload');
 	const create = document.createElement('img');
 	pre.appendChild(create);
-	let imgs = ["./img/star.png","./img/tempcar.png","./img/blast.gif"];
+	let imgs = ["./img/star.png","./img/tempcar.png","./img/tempcar2.png","./img/blast.gif"];
 	for(let i=0;i<imgs.length;i++){
 		create.src = imgs[i];
 		create.style.maxWidth = '100%';
 		create.style.height = '100%';
 	}
 	setTimeout(() => {
-		pre.removeChild(create)
+		pre.removeChild(create);	
 	},3000);
 }
 
@@ -169,13 +169,9 @@ window.addEventListener('keydown', function(e) {
 			break;
 		case 32: // SPACE
 			if(space){
+
 				pausegame();
 				keylock();
-				space = false;	
-			}
-			else{
-				resume();
-				space=true;
 			}
 			break;
 		case 37: // LEFT ARROW
@@ -217,6 +213,10 @@ window.addEventListener('keydown', function(e) {
    				carimg.src = './img/car2.png';
    				flagimg = 2;
 			}
+   			else if(flagimg == 2){
+   				carimg.src = './img/car4.png';
+   				flagimg = 3;
+			}
 			else{
 				carimg.src = './img/car.png';
    				flagimg = 0;
@@ -248,13 +248,16 @@ function randomcarY(){
 
 }
 
-
+let ca = ["./img/tempcar.png","./img/tempcar2.png"];
+let tempc ="";
 function othercar(){
 	randomcar.style.display = 'block';
+	tempc = Math.floor((Math.random() *2));
 	relasekeylock();
 	resetcar();
 		rany = -150;
 		ranx = Math.floor((Math.random() * 4))*80;
+
 		randomcar.style.left = ranx + 'px';
 		randomcar.style.top = rany + 'px';
 	startmovey();
@@ -270,7 +273,7 @@ function blastcar(){
 }
 function resetcar(){
 
-	randomcar.src = './img/tempcar.png';
+	randomcar.src = ca[tempc];
 	randomcar.style.width = '60px';
 	randomcar.style.height = '125px';
 	randomcar.style.transform = 'translateX(0)';
@@ -377,12 +380,14 @@ function lifecount(){
 
 function NewGame(){
 	relasekeylock();
-	counter()
+	counter();
 	pause.style.display = 'none';
 	gameover.style.display = 'none';
+
 	lifeline = 5;	
 	posx=0;
 	posy = screen.availHeight-195;
+
 	carimg.style.top = posy + 'px';
 	carimg.style.left = posx + 'px';
 
