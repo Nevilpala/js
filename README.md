@@ -12,7 +12,7 @@
   </ul>
   <ul type="square">
     <h3>Game</h3>
-    <li><a target="_blank" href="https://nevilpala.github.io/js/snake">Snake</a></li>
+    <li><a target="_blank" href="https://nevilpala.github.io/js/snakegame">Snake</a></li>
     <li><a target="_blank" href="https://nevilpala.github.io/js/car">Car</a></li>
     <li><a target="_blank" href="https://nevilpala.github.io/js/tic">Tic Tac Toe</a></li>
     <li><a target="_blank" href="https://nevilpala.github.io/js/stonepaper">Stone Paper</a></li>
