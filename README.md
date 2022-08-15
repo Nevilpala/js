@@ -16,6 +16,6 @@
     <li><a target="_blank" href="https://nevilpala.github.io/js/car">Car</a></li>
     <li><a target="_blank" href="https://nevilpala.github.io/js/tic">Tic Tac Toe</a></li>
     <li><a target="_blank" href="https://nevilpala.github.io/js/stonepaper">Stone Paper</a></li>
-    <li><a target="_blank" href="https://nevilpala.github.io/js/flipcard">Filp Card</a></li>
+    <li><a target="_blank" href="https://nevilpala.github.io/js/game/flipcard">Filp Card (working)</a></li>
   </ul>
 </body>
