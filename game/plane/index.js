@@ -266,24 +266,23 @@ if(flagstart){
 			
 		}
 		if(e.keyCode == 13 && flagstart){
-			const act = document.getElementsByClassName('active')[0];
-			let i=3;
-			var  clearstart = setInterval(()=>{
-				if(i<=0){
-					overlay.innerHTML="";
-					clearInterval(clearstart);
-					overlay.style.display="none";
-				}
-				overlay.innerHTML = '<div class="text-center text-danger blinker"><h1 class="display-1  fw-bold">Let\'s Begin</h1><h1 class="display-5 text-info fw-bold">'+(i--)+'</h1></div>';
-			},1000);
-			act.click();
 			flagstart = false;
-
 		}
 	}
 }
 
 function startgame(){
+	const act = document.getElementsByClassName('active')[0];
+	let i=3;
+	var  clearstart = setInterval(()=>{
+		if(i<=0){
+			overlay.innerHTML="";
+			clearInterval(clearstart);
+			overlay.style.display="none";
+		}
+		overlay.innerHTML = '<div class="text-center text-danger blinker"><h1 class="display-1  fw-bold">Let\'s Begin</h1><h1 class="display-5 text-info fw-bold">'+(i--)+'</h1></div>';
+	},1000);
+	act.click();
 	setTimeout(()=>{
 		overlay.innerHTML="";
 		Bulletmaker();
