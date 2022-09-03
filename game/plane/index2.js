@@ -1,9 +1,9 @@
 const planeImg = document.getElementById('plane-img');
 const enemyImg = document.getElementById('enemy-img');
-const missileImg = document.getElementById('missile-img');
 const gamearea = document.getElementById('gamearea');
 const target = document.getElementById('target');
 const overlay = document.getElementById('overlay');
+const showscore = document.getElementById('score');
 // const p2 = document.getElementById('point2');
 // const p1 = document.getElementById('point1');
 const bulletfire = document.getElementsByClassName('bullet');
@@ -23,11 +23,15 @@ let flag = true;
 let flagkey = false;
 let bright = 100;
 let enemylife = 0;
+let scorecount = 0;
 
 
 let clearbullet="";
 let clearfire = "";
 let clearlauch = "";
+let clearstar="";
+let clearstarmove="";
+
 
 
 const gamepart = {
@@ -51,7 +55,7 @@ function moveLeft(){
 	planeImg.style.left = planeposX + 'px';
 }
 function moveRight() {
-	if(planeposX < ((screen.availWidth - screen.availWidth*0.6)+30))
+	if(planeposX < (gamearea.clientWidth-100))
 		planeposX+=5;
 	planeImg.style.left = planeposX + 'px';
 }
@@ -87,7 +91,17 @@ document.addEventListener('keydown',function(e){
 		}
 	}
 });
+document.addEventListener('visibilitychange', function(){
+	if (document.visibilityState === 'visible') {
+		star();
+		Bulletmaker()
 
+	} 
+	else {
+		clearInterval(clearstar);
+		clearInterval(clearbullet);
+	}
+});
 document.addEventListener("contextmenu", function (e){
     e.preventDefault();
 }, false);
@@ -121,48 +135,31 @@ function Bulletfiring(){
 			if(bulletposY >= -50 && flag){
 				bulletposY-=2;
 				bullet.style.top = bulletposY + 'px';
-				check(bulletposX,bulletposY);
+				check('bullet',bulletposX,bulletposY);
 			}
 		},10)
 	}
 }
-document.addEventListener('visibilitychange', function(){
-	if (document.visibilityState === 'visible') {
-		launchermissile();
-		missileImg.style.display="";
-	} 
-	else {
-		missileImg.style.display="none";
-		// showmenu('pause');
-		clearInterval(clearbullet);
-	}
-});
-enemyplane()
+// 
+
+enemyplane();
 function enemyplane(){
 
 	planerestore();
-	const temp = parseInt(Math.floor(Math.random()*(screen.availWidth - screen.availWidth*0.6)+30));
+	const temp = parseInt(Math.floor(Math.random()*(gamearea.clientWidth-100)+30));
 	enemyposX = temp;
 
 	enemyImg.style.left = enemyposX + 'px';
 	enemyImg.style.top = 0 + 'px';
-
-
-	missileImg.style.top = 0 + 'px';
-	missileImg.style.left = enemyposX+ 'px';
-
-
 }
 function planerestore(){
 	enemyImg.style.filter = "brightness(100%)"
 	bright = 100;
-	// enemyImg.style.top = -100 + 'px';
-
 }
 
-function check(bulletposX,bulletposY){
+function check(name, posX,posY,elem,checkflag){
 	// console.log(enemyposY,bulletposY)	
-	if(enemyposX < bulletposX+50 && enemyposX +80 > bulletposX+50 && enemyposY == bulletposY){
+	if(name=="bullet" && enemyposX < posX+50 && enemyposX +80 > posX+50 && enemyposY == posY){
 		if(enemylife >= 10){
 
 			enemylife = 0;
@@ -173,67 +170,88 @@ function check(bulletposX,bulletposY){
 		enemyImg.style.filter = "brightness(" +bright+"%)";
 		
 		enemylife++;
-		console.log('ENEMYLIFE',enemylife);
+		// console.log('ENEMYLIFE',enemylife);
 	}
+
+	// if(name==="star" && planeposX < posX && planeposX+100 > posX && planeposY+25 ==posY && checkflag){
+	if(name==="star" && planeposX < posX && planeposX+100 > posX && planeposY<=posY && planeposY+100>=posY && checkflags){
+		elem.remove();
+		scorecount++;
+		showscore.innerHTML="<stong>SCORE : "+scorecount+"</strong>";
+		console.log(scorecount);
+		checkflag=false;
+	}
+
+	// console.log(planeposX,posX,planeposX+100,planeposY,posY)
 
 }
 function launchermissile(){
 	clearlauch = setInterval(()=>{
+		console.log('hi')
 		target.style.display = "none";
+		createmissile();
 		missilereset();
 		setTimeout(() =>{
 			missile();
 			target.style.display = "block";
-		}, 2000);
-	},5000)
+		}, 3000);
+	},9000)
 }
-function missile(){
-	let X = planeposX;
-	let Y = planeposY;
-
+function createmissile(){
 	const rocket = document.createElement('img');
 	rocket.src = "./img/missile.png";
 	rocket.id="missile-img"
+	rocket.className="rocket";
 	gamearea.appendChild(rocket);
+
+	rocket.style.top = 0 + 'px';
+	rocket.style.left = enemyposX + 'px';
+}
+function missile(){
+	const rocket = document.getElementById('missile-img');
+
+	let X = planeposX;
+	let Y = planeposY;
 
 
 	target.style.top = Y + 'px';
 	target.style.left = X+25+ 'px';
 
-	missileImg.style.transition="4s ease";
+	const angle = Math.atan((enemyposX - X) / (Y+510))*(180/Math.PI);
+	rocket.style.transform = "rotate("+ angle+"deg)"
+	rocket.style.transition="4s ease-in";
 
-	missileImg.style.top = Y + 'px';
-	missileImg.style.left = X+40+ 'px';
 
+	rocket.style.top = Y + 'px';
+	rocket.style.left = X+40+ 'px';
+
+	// setTimeout(()=>{
+	// 	target.style.display = "none";
+	// }, 2000);
 	setTimeout(()=>{
-		target.style.display = "none";
-	}, 2000);
-	setTimeout(()=>{
-		// target.style.display = "block";
-		missileblast()
+		missileblast();
 		setTimeout(()=>{
-			missileImg.style.display = "none";
-			missileImg.style.top = 0 + 'px';
-			missileImg.style.left = enemyposX+ 'px';
 			missilereset();
+			rocket.remove();
 		}, 1000);
-		setTimeout(()=>{
-			// target.style.display = "none";
-			missileImg.style.display = "";
-		}, 2000);
-	}, 3700);
+
+	}, 3900);
 
 
 }
 
-function missileblast(){
+function missileblast(rocket){
+	const missileImg = document.getElementById('missile-img');
+
 	missileImg.src = "./img/blast.gif";
 	missileImg.style.height = "100px"
 	missileImg.style.width = "100px"
 
 }
 
-function missilereset(){
+function missilereset(rocket){
+	const missileImg = document.getElementById('missile-img');
+
 	missileImg.src = "./img/missile.png";
 	missileImg.style.width = "25px"
 	missileImg.style.height = "75px"
@@ -284,14 +302,15 @@ function startgame(){
 			overlay.style.display="none";
 
 		}
-		overlay.innerHTML = '<div class="text-center text-danger blinker"><h1 class="display-1  fw-bold">Let\'s Begin</h1><h1 class="display-5 text-info fw-bold">'+(i--)+'</h1></div>';
+		// overlay.innerHTML = '<div class="text-center text-danger blinker"><h1 class="display-1  fw-bold">Let\'s Begin</h1><h1 class="display-5 text-info fw-bold">'+(i--)+'</h1></div>';
 	},1000);
-	setTimeout(()=>{
+	// setTimeout(()=>{
 		overlay.innerHTML="";
 		Bulletmaker();
-		launchermissile()
+		launchermissile();
+		star()
 		flagkey=true;
-	},4000)
+	// },4000)
 
 }
 
@@ -299,7 +318,50 @@ function refresh(){
 	location.reload();
 }
 
+function star(){
 
-function Setting(){
-	console.log();
+	clearstar = setInterval(starmaker,1000);	
+}
+function starmaker(){
+	const star = document.createElement('img');
+	star.src="./img/star.png";
+	star.className="star";
+	gamearea.appendChild(star);
+
+	let posX = Math.floor(Math.random()*(gamearea.clientWidth-100));
+	let posY = -50;
+	
+	const angle = Math.floor(Math.random()*60);
+	// const angle =planeposX;
+	star.style.transform = "rotate("+angle+"deg)";
+
+
+	star.style.left = posX + 'px';
+	star.style.top = posY + 'px';
+
+
+	clearstarmove = setInterval(()=>{
+
+		if(angle%2===0){
+			posX -=1;
+			star.style.left = posX + 'px';
+
+		}
+		else{
+			posX +=1;
+			star.style.left = posX + 'px';
+
+		}
+
+		posY+=2;
+		star.style.top = posY + 'px';
+
+		if(posY > gamearea.clientHeight+50 || posX > gamearea.clientWidth+50 || posX < -50  ){
+			star.remove()
+		}
+		else{
+			check('star',posX,posY,star,true);
+		}
+	},10);
+
 }

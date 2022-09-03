@@ -18,9 +18,14 @@
 
 	background: url('./img/bg.gif') center center;
 	/*background-size: cover;*/
-	overflow: hidden;
+	/*overflow: hidden;*/
 	border-radius: 20px;
 	border: 2px solid rgba(255,255,255,0.5)
+}
+@media screen and (max-width: 600px){
+	.gamearea{
+		width: 95%;
+	}
 }
 #plane-img{
 	position: absolute;
@@ -29,6 +34,18 @@
 	width: 100px;
 	z-index: 99;
 
+}
+
+.planetranslate{
+	animation: trans 2s ease;
+}
+@keyframes trans{
+	0%{
+		top: -100px;
+	}
+	100%{
+		top: 0px;
+	}
 }
 #enemy-img{
 	position: absolute;
@@ -44,7 +61,7 @@
 	z-index: 99;
 	width: 25px;
 	height: 75px;
-	animation: rotatemisile .3s linear infinite;
+	/*animation: rotatemisile .3s linear infinite;*/
 
 }
 @keyframes rotatemisile{
@@ -59,6 +76,7 @@
 	width: 5px;
 	background: linear-gradient(to right,red,yellow,red);
 	z-index: 9;
+	transition: ease;
 }
 #target{
 	position: absolute;
@@ -82,22 +100,14 @@
 	}
 }
 
-.planetranslate{
-	animation: trans 2s ease;
-}
-@keyframes trans{
-	0%{
-		top: -100px;	
-	}
-	100%{
-		top: 0px;
-	}
-}
 
 #damage{
 
 }
 .show{
+	display: flex;
+}
+#start{
 	display: flex;
 }
 .menu{
@@ -115,6 +125,17 @@
 	align-items: center;
 	display: none;
 
+}
+.menu-inner{
+	text-align: center;
+	padding: 40px 20px;
+	width: 500px;
+	background-color: rgba(0,0,0,0.7);
+	backdrop-filter: blur(5px);
+	border-radius: 10px;
+	font-family: sans-serif;
+	font-weight: bold;
+	letter-spacing: 2px;
 }
 
 .startbtn{
@@ -141,31 +162,11 @@
 		opacity: 0.7;
 	}
 }
-#start{
-	display: flex;
-}
-#start .title{
+.text-bg{
 	background: url(./img/s.gif) no-repeat center center;	
 	background-size: cover;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
-}
-.start-inner{
-}
-.pause-inner,.menu-inner{
-	text-align: center;
-	padding: 40px 20px;
-	width: 500px;
-	max-width: 100%;
-	background-color: rgba(0,0,0,0.7);
-	backdrop-filter: blur(5px);
-	border-radius: 10px;
-	font-family: sans-serif;
-	font-weight: bold;
-	letter-spacing: 2px;
-}
-.pause-inner .title{
-
 }
 .corner-btn{
 	position: absolute;
@@ -191,12 +192,13 @@
 	z-index: 999999;
 
 	display: flex;
-	/*display: none;*/
 	align-items: center;
 	justify-content: center;
 
 	animation: load 5s linear;
 	animation-fill-mode: forwards;
+	display: none;
+
 }
 
 #loader div{
@@ -219,4 +221,33 @@
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%,-50%);
+}
+#help{
+	/*display: flex;*/
+	color: white;
+}
+
+.helptable th{
+	color: red;
+}
+.helptable td{
+	color: rgba(255,255,255,1);
+}
+
+.star{
+	position: absolute;
+	z-index: 9;
+	width: 25px;
+	height: 25px;
+
+	transition-timing-function: linear;	
+}
+#score{
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: red;
+	color: white;
+	width: 200px;
+	height: 50px;
 }
