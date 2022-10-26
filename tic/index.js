@@ -2,6 +2,7 @@ const p1 = document.getElementById('player1');
 const p2 = document.getElementById('player2');
 const win1 = document.getElementById('win1');
 const win2 = document.getElementById('win2');
+const main = document.getElementById('main');
 const winbox = document.getElementById('winbox');
 const won = document.getElementById('won');
 const td = document.getElementsByTagName('td');
@@ -28,7 +29,12 @@ function changename(e){
 	playername[e].innerHTML=pname===""?"PLAYER "+(e+1) :pname.toUpperCase();
 }
 function load(){
+	const bufer = document.createElement('div');
+	bufer.innerHTML = '<img src="./img/circle.png">'+'<img src="./img/cross.png">';
+	bufer.className='buffer';
+	main.appendChild(bufer);
 
+	setTimeout(()=>{bufer.remove()},5000);
 }
 
 function StartGame(n){
