@@ -1,111 +1,57 @@
-// var corosel = document.getElementById('');
-var item = document.getElementsByClassName('item');
-var randomimg = document.getElementById('randomimg');
-var overlay = document.getElementById('overlay');
-var win = document.getElementsByClassName('winner');
+var v="";
+var answer = "";	
+var temp="";
+var txt = document.getElementById('txt');
 
-let i=0;
-item[i].style.display = 'block';
-var img = ["paper" ,"rock" ,"scissor"];
 
-function allnull(){
-	for(var i=0;i<item.length;i++){
-		item[i].style.display = 'none';
-	}
+function calc(op){
+	// x=document.getElementsByClassName('num');
+	v=op.innerHTML;
+
+	temp+=v;
+	display();
 }
 
-function prev(){
-	allnull();	
-	i--;
-	if(i<0){
-		i=item.length -1;	
+function display(){
+	document.getElementById('txt').value = temp;
+	var sc = document.getElementById("txt").value;
+}
+function ans_calc(){
+	var eq=document.getElementById('txt').value;
+	try{
+		answer = eval(eq);
 	}
-	console.log(i);
-	item[i].style.display = 'block';
+	catch{
+		answer = "Undefined";
+	}
+
+	document.getElementById("ans").innerHTML=answer;
+}
+
+function backspace(){
+ 	temp=temp.substring(0, temp.length - 1);
+	document.getElementById('txt').value = temp;
+}
+
+
+function clearall(){
+	temp="";
+	answer="";
+	// var eq=document.getElementById('txt').value;
+	// document.getElementById('txt').value = eq.substring(0, eq.length - eq.length);
+	// location.reload();
+
+	document.getElementById('txt').value = temp;
+	document.getElementById('ans').innerHTML = answer;
 
 
 }
-function next(){
-	allnull();
-	i++;
-	if(i==item.length){
-		i=0;
-	}
-	console.log(i);
-
-	item[i].style.display = 'block';
-
-}
-
-var temp = "";
-function compare(){
-	com_player();
-	setTimeout(check,100);
-}
-
-function com_player(){
-	temp = Math.floor(Math.random()*2.5);	
-	let see = img[temp];
-	randomimg.innerHTML = '<img src="./img/'+see+'.png">';
-
-}
-
-function check(){
-	imgDnone();
-	if(i == temp){
-		overlay.style.display = 'block';
-		overlay.innerHTML = '<p class="zoomout">DRAW</p>';
-	}
-	else if(i == 0 && temp == 2 || i == 1 && temp == 0 || i == 2 && temp == 1){
-		imgDnone();
-		win[1].style.display = 'block';
-	}
-	else{
-		imgDnone();
-		win[0].style.display = 'block';
-
-	}
-
-	// setTimeout(clearAll,1000);
-}
-
-function imgDnone(){
-	for(var i=0;i<win.length;i++){
-		win[i].style.display = 'none';
-	}
-
-	overlay.style.display = 'none';
-
-}
-
-function clearAll(){
-	for(var i=0;i<win.length;i++){
-		win[i].style.display = 'none';
-	}
-
-	overlay.style.display = 'none';
-	randomimg.innerHTML = '';
-
-}
-
-window.addEventListener('keydown', function(e) {
-	switch (e.keyCode) {
-		case 27: // ESC
-		case 32: // SPACE
-			break;
-		case 37: // LEFT ARROW
-			prev();
-			break;
-		case 38: // UP ARROW
-			
-			break;
-		case 39: // RIGHT ARROW
-			next();
-			break;
-		case 40: // DOWN ARROW
-       		break;
-   		case 13:  // ENTER
-   			compare();
-			break;
-	}
-});
+document.addEventListener("keypress", function(e) {
+	  if (e.key === "Enter") {
+	    ans_calc();
+	  }
+	  else{
+	  	// txt.value=temp;
+	  	txt.focus();
+	  }
+	});
