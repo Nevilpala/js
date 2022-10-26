@@ -67,6 +67,9 @@ input{
 	outline: 0!important;
 	padding-left: 20px;
 }
+input{
+	caret-color:transparent;
+}
 #ans{
 	user-select: none;
 	cursor: not-allowed;

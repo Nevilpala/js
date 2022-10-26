@@ -1,6 +1,8 @@
 var v="";
 var answer = "";	
 var temp="";
+var txt = document.getElementById('txt');
+
 
 function calc(op){
 	// x=document.getElementsByClassName('num');
@@ -9,21 +11,19 @@ function calc(op){
 	temp+=v;
 	display();
 }
+
 function display(){
 	document.getElementById('txt').value = temp;
-
-	
 	var sc = document.getElementById("txt").value;
-	document.addEventListener("keypress", function(e) {
-	  if (e.key === "Enter") {
-	    ans_calc();
-	  }
-	});
-
 }
 function ans_calc(){
 	var eq=document.getElementById('txt').value;
-	answer = eval(eq);
+	try{
+		answer = eval(eq);
+	}
+	catch{
+		answer = "Undefined";
+	}
 
 	document.getElementById("ans").innerHTML=answer;
 }
@@ -46,3 +46,12 @@ function clearall(){
 
 
 }
+document.addEventListener("keypress", function(e) {
+	  if (e.key === "Enter") {
+	    ans_calc();
+	  }
+	  else{
+	  	// txt.value=temp;
+	  	txt.focus();
+	  }
+	});
