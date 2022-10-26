@@ -14,7 +14,7 @@ function display(){
 
 	
 	var sc = document.getElementById("txt").value;
-	sc.addEventListener("keypress", function(e) {
+	document.addEventListener("keypress", function(e) {
 	  if (e.key === "Enter") {
 	    ans_calc();
 	  }
