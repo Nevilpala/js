@@ -6,8 +6,7 @@
   <hr>
   <ul type="square">
     <h3>Js</h3>
-    
-    <li><a href="https://nevilpala.github.io/js/calculator" target="_blank">Login-Page</a></li>
+    <li><a href="https://nevilpala.github.io/js/calculator" target="_blank">Calculator</a></li>
     <li><a href="https://nevilpala.github.io/js/login" target="_blank">Login-Page</a></li>
     <li><a href="https://nevilpala.github.io/js/timer" target="_blank">Timer/Stopwatch</a></li>
     <li><a href="https://nevilpala.github.io/js/time" target="_blank">Clock</a></li>
