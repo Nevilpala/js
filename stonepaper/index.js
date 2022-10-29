@@ -113,22 +113,33 @@ function clearAll(){
 }
 
 window.addEventListener('keydown', function(e) {
+
 	switch (e.keyCode) {
 		case 27: // ESC
 		case 32: // SPACE
+			imgDnone();
 			break;
 		case 37: // LEFT ARROW
+			allnull('ran')
+			imgDnone();
 			prev();
 			break;
 		case 38: // UP ARROW
-			
+			allnull('ran')
+			imgDnone();
 			break;
 		case 39: // RIGHT ARROW
+			allnull('ran')
+			imgDnone();
 			next();
 			break;
 		case 40: // DOWN ARROW
+			allnull('ran')
+			imgDnone();
        		break;
    		case 13:  // ENTER
+   			allnull('ran')
+   			imgDnone();
    			compare();
 			break;
 	}
