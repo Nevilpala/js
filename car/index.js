@@ -1,16 +1,22 @@
 let carimg = document.getElementById('car');
 let road = document.getElementById('road');
+let main = document.getElementById('main');
 
-// let randomcar = document.getElementsByClassName('randomcar');
+let Ecar = document.getElementsByClassName('randomcar');
 let randomcar = document.getElementById('randomcar1');
 let star = document.getElementById('star');
 let score = document.getElementById('score');
 
 let box = document.getElementById('game-container');
+let nightlampdiv = document.getElementsByClassName('nightlampdiv');
+// let nightlampdiv = document.getElementById('nightlampdiv');
 
 let gameover = document.getElementById('gameover');
 
 let heart = document.getElementsByClassName('heartimg');
+let tree = document.getElementsByClassName('tree');
+let lamp = document.getElementsByClassName('lamp');
+
 let overlayscore = document.getElementById('overlayscore');
 let pause = document.getElementById('pause-menu');
 let highscore = document.getElementById('highscore');
@@ -18,9 +24,6 @@ let showhighscore = document.getElementById('showHighscore');
 let starter = document.getElementById('starter');
 
 
-
-let ranx = 0 ;
-let rany = -150 ;
 
 let posx = 0;
 let posy = screen.availHeight-195;
@@ -39,21 +42,30 @@ let space = true;
 let flagimg = 0;
 
 var clearstary = "";
-var clearmovey = "";
+var cleardaynight = "";
+var clearmovey = [];
+var clearlampy = [];
+var clearElementY = [];
+
+let EcarImg = ["./img/tempcar.png","./img/tempcar2.png"];
+let Ecarcolor = EcarImg.length;
 
 let lifeline = 5;
 let count = 0
 
-
-counter();
+counter();	
 function load(){
-	box.style.animationPlayState = 'paused';
-	randomcar.style.display = "none";
+	box.style.animationPlayState = 'paused';	
 	star.style.display = "none";
+	daynightvision();
 
-	setTimeout(othercar,4000);
+	setTimeout(createEnemycar,4000);
 	setTimeout(starmaker,4000);
+	setTimeout(moveLampY,3950);
 	preloder();
+
+	nightlamp();		
+
 }
 function preloder(){
 	const pre = document.getElementById('preload');
@@ -66,7 +78,7 @@ function preloder(){
 		create.style.height = '100%';
 	}
 	setTimeout(() => {
-		pre.removeChild(create);	
+		pre.removeChild(create);
 	},3000);
 }
 
@@ -126,8 +138,11 @@ function relasekeylock(){
 function pausegame(){
 	keylock();
 	pause.style.display = 'flex';
-	clearInterval(clearmovey);
+	stopmoveEcarY();
+	stopAllItem();
 	clearInterval(clearstary);
+	clearInterval(cleardaynight);
+
 	box.style.animationPlayState = 'paused';
 	
 }
@@ -136,7 +151,10 @@ function resume(){
 	gameover.style.display = 'none';
 	counter();
 	setTimeout(starmovey,4000);
-	setTimeout(startmovey,4000);
+	setTimeout(startmoveAllEcarY,4000);
+	setTimeout(moveLampY,4000);
+	daynightvision();
+	
 }
 
 function counter(){
@@ -230,70 +248,132 @@ function staightcar(){
 }
 
 
-function startmovey(){
-
-	clearInterval(clearmovey);
-	clearmovey = setInterval(randomcarY,10);	
+function Random(min,max){
+	if(max!==undefined) return Math.floor(Math.random() * (max - min) ) + min;
+	else return Math.floor(Math.random() * min);
 }
-function randomcarY(){
-	rany+=1+incre;
-	randomcar.style.top = rany + 'px';
-
-	if(rany >= screen.availHeight && lifeline >0){
-		rany = -150;
-		othercar();
+function createEnemycar(){
+	for (let i = 0; i < 3; i++) {
+		const newEcar = document.createElement('img');
+		newEcar.className = 'randomcar';
+		newEcar.src= EcarImg[Random(Ecarcolor)];
+		road.appendChild(newEcar);
+		Enemycar(newEcar,true);
 	}
-	
-	scorecount();
-
 }
-
-let ca = ["./img/tempcar.png","./img/tempcar2.png"];
-let tempc ="";
-function othercar(){
-	randomcar.style.display = 'block';
-	tempc = Math.floor((Math.random() *2));
+function Enemycar(setEcar,EcarFlag){
 	relasekeylock();
-	resetcar();
-		rany = -150;
-		ranx = Math.floor((Math.random() * 4))*80;
+	resetcar(setEcar);
 
-		randomcar.style.left = ranx + 'px';
-		randomcar.style.top = rany + 'px';
-	startmovey();
+
+
+	let EcarY = -150*Random(1,5);
+	let EcarX = Math.floor((Math.random() * 4))*80;
+
+	if(collideEcar(EcarX,EcarY)){
+		Enemycar(setEcar,true);
+		return;
+	}
+
+	setEcar.style.left = EcarX + 'px';
+	setEcar.style.top = EcarY + 'px';
+
+	if(EcarFlag) startmovey(setEcar,EcarX,EcarY);
+}
+	
+function startmoveAllEcarY(){
+	for (let i = 0; i < Ecar.length; i++) {
+
+		let Y = Ecar[i].style.top;
+		Y = parseInt(Y.slice(0, -2));
+
+		let X = Ecar[i].style.left;
+		X = parseInt(X.slice(0, -2));
+
+		startmovey(Ecar[i],X,Y);
+	}
+}
+function startmovey(item,x,y){
+	let EcarX = x;
+	let EcarY = y;
+
+	item.style.top = EcarY + 'px';
+	item.style.left = EcarX + 'px';
+
+	let cleary = setInterval(()=>{
+		EcarY+=1+incre;
+		item.style.top = EcarY + 'px';
+		item.style.left = EcarX + 'px';
+		if(EcarY >= (screen.availHeight+200) && lifeline >0){
+			clearInterval(cleary);
+			Enemycar(item,true);
+		}
+		scorecount(item,EcarX,EcarY);
+
+	},10);	
+	clearmovey.push(cleary);
 
 }
 
-function blastcar(){
-	randomcar.src = './img/blast.gif';
-	randomcar.style.width = '150px';
-	randomcar.style.height = '150px';
-	randomcar.style.transform = 'translateX(-50px)';
+function stopmoveEcarY(){
+	for (let i = 0; i < clearmovey.length; i++) {
+		clearInterval(clearmovey[i]);
+	}
+}
+
+function blastcar(item){
+	item.src = './img/blast.gif';
+	item.style.width = '150px';
+	item.style.height = '150px';
+	item.style.transform = 'translateX(-50px)';
 	box.style.animationPlayState = 'paused';
 }
-function resetcar(){
+	
+function displayAllEcar(){
+	for (let i = 0; i < Ecar.length; i++) {
+		Ecar[i].style.display = 'block';
+	}
+}
+function hideAllEcar(){
+	for (let i = 0; i < Ecar.length; i++) {
+		Ecar[i].style.top = -150+'px';
+	}
+}
+function resetcar(item){
+	displayAllEcar();
 
-	randomcar.src = ca[tempc];
-	randomcar.style.width = '60px';
-	randomcar.style.height = '125px';
-	randomcar.style.transform = 'translateX(0)';
+	item.src = EcarImg[Random(Ecarcolor)];
+	item.style.width = '60px';
+	item.style.height = '125px';
+	item.style.transform = 'translateX(0)';
 	box.style.animationPlayState = 'running';
 }
 
-function scorecount(){
-	
+function scorecount(item,ranx,rany){
+	const items = item.style;
 	 if((rany-125) < posy && (rany+120) > posy && posx == ranx){
-		clearInterval(clearmovey);
-		clearInterval(clearstary);
-		blastcar();
+		stopmoveEcarY();
+		clearInterval(clearstary);	
+		clearInterval(cleardaynight);
+
+		stopAllItem();
+		blastcar(item); 	
 		keylock();
 		lifecount();
 		count--;
 		score.innerHTML = count;
-		setTimeout(othercar,2000);
-		setTimeout(starmaker,1000);
+
+		setTimeout(()=>Enemycar(item,false),2000);
+		setTimeout(startmoveAllEcarY,2000);	
+
+		setTimeout(starmaker,1500);
+		setTimeout(moveLampY,2000);
+		daynightvision();
+
+
+
 	}
-	if( (ranx-80) ==  posx && rany == posy|| (ranx+80) == posx && rany == posy ) {
+	if( (ranx-80) === posx && posy===rany && posy===rany || (ranx+80) === posx && rany == posy ) {
 		count+=2;
 		overlayscores('+2');
 		score.innerHTML=count;
@@ -319,31 +399,26 @@ function scorecount(){
 	}
 
 	if(count >=30&& count<50){
-		incre=0.1
+		incre=0.3;
+
 	}
-	else if(count >=50 && count<75){
-		incre=0.2
+	else if(count >=50 && count<100){
+		incre=0.5;
 	}
-	else if(count >=75 && count<100){
-		incre=0.3
+	else if(count >=100 && count<150){
+		incre=0.75;
 	}
-	else if(count >=100 && count<125){
-		incre=0.6
-	}
-	else if(count >=125 && count<150){
-		incre=0.75
-	}
-	else if(count >=150 && count<175){
-		incre=1
-	}
-	else if(count >=175 && count<250){
-		incre=1.15
+	else if(count >=150 && count<250){
+		incre=1;
 	}
 	else if(count >=250 && count<300){
-		incre=1.25
+		incre=1.25;
 	}
 	else if(count >=300){
-		incre=1.5
+		incre=1.5;
+	}
+	else if(count >=400){
+		incre=1.7;
 	}
 	else{
 		incre=0;
@@ -352,9 +427,9 @@ function scorecount(){
 
 }
 var flag = true;
-function lifecount(){
+function lifecount(item){
 		lifeline--;
-		overlayscores('-1');
+		overlayscores('<img src="./img/life.png" class="heartimg img-fluid "> -1');
 		if(lifeline == 5){
 			heart[lifeline].style.filter = "grayscale(0)";
 		}
@@ -365,7 +440,7 @@ function lifecount(){
 			checklifes();
 			keylock();
 			box.style.animationPlayState = 'paused';
-			clearInterval(clearmovey);
+			stopmoveEcarY();
 			clearInterval(clearstary);
 			heart[lifeline].style.filter = "grayscale(1)";
 			gameover.style.display = 'flex';
@@ -373,7 +448,7 @@ function lifecount(){
 		if(lifeline < 0){
 			keylock();
 			box.style.animationPlayState = 'paused';
-			clearInterval(clearmovey);
+			stopmoveEcarY();
 			clearInterval(clearstary);
 		}
 }
@@ -404,13 +479,18 @@ function NewGame(){
 	for(let i=0; i<heart.length;i++){
 		heart[i].style.filter = "grayscale(0)";
 	}
-	clearInterval(clearmovey);
+	stopmoveEcarY();
+	hideAllEcar();
 	clearInterval(clearstary);	
 	clearInterval(checklife);	
 
 	setTimeout(starmaker,4000);
-	setTimeout(othercar,4000);
+	setTimeout(moveLampY,4000);
+	setTimeout(startmoveAllEcarY,4000);
+	daynightvision();
+
 }
+
 var hslock = 0;
 
 function starmaker(){
@@ -421,16 +501,13 @@ function starmaker(){
 	starx = Math.floor((Math.random() * 4))*80;
 	star.style.left = starx + 'px';
 	star.style.top = stary + 'px';
-	if(starx == ranx){
-		starmaker();
-	}
 	starmovey();
 
 }
 
 function starmovey(){
  	clearInterval(clearstary);
- 	clearstary = setInterval(starymove,10);
+ 	clearstary = setInterval(starymove,8);
 }
 
 function starymove(){
@@ -461,8 +538,101 @@ function checklifes(){
 		if(lifeline <= 0){
 			keylock();
 			box.style.animationPlayState = 'paused';
-			clearInterval(clearmovey);
+			stopmoveEcarY();
 			clearInterval(clearstary);
+	
 		}
 	},1000);
+}
+
+function daynightvision(){
+	clearInterval(cleardaynight);
+	cleardaynight = setInterval(()=>{
+		if(main.className.includes("night")){
+			main.classList.remove("night");
+			main.classList.add("day");
+			for (let i = 0; i < lamp.length; i++) {
+				lamp[i].src="./img/day.png";
+			}
+		}
+		else{
+			main.classList.remove("day");
+			main.classList.add("night");
+			for (let i = 0; i < lamp.length; i++) {
+				lamp[i].src="./img/night.png";
+			}
+		}
+
+	},20000);
+}
+
+function nightlamp(){
+	for (let i = 0; i < nightlampdiv.length; i++) {
+		const elem = nightlampdiv[i];
+		createnightlamp(elem);
+	}
+}
+
+function createnightlamp(elem){
+	const nlamplen = parseInt(screen.availHeight/125);
+
+	for(let i=0;i<nlamplen;i++){
+		const nlamp = document.createElement('img');
+
+		nlamp.src = "./img/day.png";
+		nlamp.className = "lamp";
+
+
+		let lampY = 150*i;
+		nlamp.style.top = lampY+"px";
+		
+		elem.appendChild(nlamp);
+	}
+}
+
+
+function stopAllItem(){
+	for (let i = 0; i < clearElementY.length; i++) {
+		clearInterval(clearElementY[i]);
+	}
+}
+function moveLampY(){
+	for (let i = 0; i < lamp.length; i++){
+		
+		const elem = lamp[i];
+		let Y = lamp[i].style.top;
+
+		let lampY = parseInt(Y.slice(0, -2));
+
+		let clearY = setInterval(()=>{
+			lampY+=5;
+			elem.style.top = lampY+"px";
+			if(lampY>screen.availHeight){
+				lampY=-50;
+			}
+		},30-(incre*8));
+		clearElementY.push(clearY);
+
+	}
+}	
+
+
+function collideEcar(x,y){
+	
+	for (var i = 0; i < Ecar.length; i++) {
+		const Ecars = Ecar[i].style;
+
+		let Xside = Ecars.left;
+		ranx = parseInt(Xside.slice(0, -2));
+
+		let Yside = Ecars.top;
+		rany = parseInt(Yside.slice(0, -2))+125;
+
+		if (x===ranx && ((rany-50) < y && (rany+125) > y|| rany===y )) {
+			console.log('.')
+			return true;
+		}
+	}
+	return false;
+
 }

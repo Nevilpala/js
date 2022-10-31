@@ -10,22 +10,64 @@
 	width: 100%;
 	height: 100vh;
 	overflow: hidden;
-	background-color: rgba(0,255,0,0.5);
-	background-size: cover;
+	background:  rgba(0,255,0,0.5) ;
+	/*background:  rgba(0,255,0,0.5) linear-gradient(90deg,rgba(0,0,0,0.4),rgba(0,0,0,0.4));*/
+	background-size: cover,cover;
 
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	position: relative;
 }
+.main.day{
+	animation: dulllight 1s ease;
+	animation-fill-mode:forwards;
+}
+
+.main.night{
+	background:  rgba(0,255,0,0.5) linear-gradient(90deg,rgba(0,0,0,0.4),rgba(0,0,0,0.4));
+	animation: dull 1s ease;
+	animation-fill-mode: backwards;
+}
+@keyframes dulllight{
+	0%{
+		background:  rgba(0,255,0,0.5) linear-gradient(90deg,rgba(0,0,0,0.4),rgba(0,0,0,0.4));
+		opacity: 0.7;
+
+	}
+	10%{
+		background:  rgba(0,255,0,0.5) linear-gradient(90deg,rgba(0,0,0,0.2),rgba(0,0,0,0.2));
+	}
+	95%{
+		background:  rgba(0,255,0,0.5) linear-gradient(90deg,rgba(0,0,0,0.0.5),rgba(0,0,0,0.0.5));
+	}
+	100%{
+		background:  rgba(0,255,0,0.5) linear-gradient(90deg,rgba(0,0,0,0.0),rgba(0,0,0,0.0));
+		opacity: 1;
+
+	}
+} 
+@keyframes dull{
+	0%{
+		background:  rgba(0,255,0,0.5) linear-gradient(90deg,rgba(0,0,0,0.1),rgba(0,0,0,0.1));
+		opacity: 0.7;
+
+	}
+	100%{
+		opacity: 1;
+	}
+} 
 #game-container{
 	width: 400px;
 	height: 100vh;
 	background-image: url(./img/images2.png);
-	/*filter: brightness(50%);*/
 	background-repeat: repeat-y;
 	background-size: 100% 110%;
-	animation: moving 175ms ease  infinite;
+		
+	animation-name: moving;
+	animation-duration: 175ms;
+	animation-timing-function: ease;
+	animation-iteration-count: infinite;
 }
 @keyframes moving{
 	0%{
@@ -50,7 +92,7 @@
 	width: 60px;
 	height: 125px;
 	left: 0;
-	display: none;
+	/*display: none;*/
 }
 
 #car{
@@ -102,9 +144,10 @@
 	line-height: 50px;
 	color: white;
 	font-size: 25px;
-	background-color: white;
+	background-color: rgba(1,50,32,0.3);
 	padding: 0 10px;
 	z-index: 999;
+
 }
 .score-menu{
 	/*position: absolute;*/
@@ -112,24 +155,25 @@
 	/*right: 0;*/
 	text-align: center;
 	line-height: 50px;	
-	color: red;
+	color: rgba(1,50,40,1);
+
 	font-size: 25px;
 	padding: 0 10px;
 	z-index: 999;
 	height: 50px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-
+	background-color: rgba(1,50,32,0.3);
 }
-.score-menu h1{
+.score-menu p{
 
 }
 .score-menu span{
 	margin-left: 10px;
-	color: darkred;
+	color: darkblue;
+	text-shadow: 0.5px 0.5px 5px white;
 	font-size: 40px;
 	font-weight: bold;
+	line-height: 100%;
+	vertical-align: bottom;
 }
 #life img{
 	width: 25px;
@@ -301,7 +345,6 @@
 #starter{
 	position: absolute;
 	z-index: 999;
-	/*top:calc(48% - 20px);*/
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
@@ -324,4 +367,56 @@
 	z-index:-9999;
 	width: 200px;
 	height: 100px;
+}
+
+img.tree{
+	width: 70px;
+	position: absolute;
+	left: -130px;
+}
+
+
+.wrapper{
+	position: fixed;
+	inset: 0;
+	z-index: 999999;
+	background-color: #fff;
+	display: grid;
+	place-items: center;
+	transition: opacity .25s,visibility 1s;
+}
+.fade{
+	opacity: 0;
+	visibility: hidden;
+}
+
+.nightlampdiv{
+	position: absolute;
+	top: -50px;
+	width: 100px;
+	height: 100%;	
+	z-index: 9999;
+
+}
+.nl-right{
+	right: 0;
+	margin-right: -50px;
+	transform: rotateY(180deg);
+
+
+}
+.nl-left{
+	left: 0;
+	margin-left: -50px;
+
+
+}
+.lamp{
+	position: absolute;
+	top: -50px;
+	left: 0;
+	width: 60px;
+	height: 60px;
+	transform: rotate(90deg);
+
 }
