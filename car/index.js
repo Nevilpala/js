@@ -1,6 +1,7 @@
 let carimg = document.getElementById('car');
 let road = document.getElementById('road');
 let main = document.getElementById('main');
+let startgame = document.getElementById('startgame');
 
 let Ecar = document.getElementsByClassName('randomcar');
 let randomcar = document.getElementById('randomcar1');
@@ -52,21 +53,21 @@ let Ecarcolor = EcarImg.length;
 
 let lifeline = 5;
 let count = 0
-
-counter();	
 function load(){
+	preloder();
 	box.style.animationPlayState = 'paused';	
 	star.style.display = "none";
+	nightlamp();
+}
+function startgameplay(){
+	startgame.style.display='none';
+	counter();	
 	daynightvision();
-
 	setTimeout(createEnemycar,4000);
 	setTimeout(starmaker,4000);
 	setTimeout(moveLampY,3950);
-	preloder();
-
-	nightlamp();		
-
 }
+
 function preloder(){
 	const pre = document.getElementById('preload');
 	const create = document.createElement('img');
