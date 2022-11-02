@@ -8,31 +8,38 @@
 	padding: 10px;
 	border-radius: 40px;
 	color:black;
-
 }
 .main{
+	position: relative;
 	width: 100%;
-	height: 100vh;
-	overflow: hidden;
-	/*background-color: red;*/
-	background: url(./img/bg.jpg) repeat center;
+	min-height: 100vh;
+	overflow-x: hidden;
+	background: url(./img/bg.jpg) no-repeat center;
 	background-size: cover;	
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 30px 0;
+
 }
 .mycorosel img,#randomimg img{
 	filter: drop-shadow(1px 1px 20px white);
 	border-radius: 40px;
+	height: 100%;
+	max-width: 100%;
+	object-fit: cover!important;
 }
 .mycorosel,#randomimg{
 	width: 100%;
 	height: 100%;
 	background-color: rgba(255,255,255,0.1);
 	position: relative;
-
 	padding: 50px 25px;
+	min-height: 350px;
 	border-radius: 50px;
 }
 .item,.item2{
-	display: block;
 	width: 100%;
 	height: 100%;
 	display: none;
@@ -75,8 +82,8 @@
 	position: absolute;
 	top:calc(50% - 100px);
 	left: 0;
-	z-index: 99;
-	color: red;	
+	z-index: 999;
+	color: red;
 	width: 100%;
 	text-align: center;
 	font-size: 100px;	
@@ -94,7 +101,7 @@
 .zoomout{
 	background-image: url(./img/bg1.jpg);
 	background-size: 100% 100%;
-	filter: drop-shadow(2px 2px 5px black);
+	filter: drop-shadow(3px 3px 5px black);
 	-webkit-background-clip: text;
     color: transparent;
 	transform: scale(1.5);
