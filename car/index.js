@@ -205,7 +205,7 @@ function counter(){
 window.addEventListener('keydown', function(e) {
 	switch (e.keyCode) {
 		case 27: // ESC
-			lifecount();
+			// lifecount();
 			break;
 		case 32: // SPACE
 			if(space){
@@ -261,6 +261,7 @@ function createEnemycar(){
 		const newEcar = document.createElement('img');
 		newEcar.className = 'randomcar';
 		newEcar.src= EcarImg[Random(Ecarcolor)];
+		newEcar.setAttribute('draggable',false);
 		road.appendChild(newEcar);
 		Enemycar(newEcar,true);
 	}
