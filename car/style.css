@@ -68,6 +68,7 @@
 	animation-duration: 175ms;
 	animation-timing-function: ease;
 	animation-iteration-count: infinite;
+	animation-play-state: paused;
 }
 @keyframes moving{
 	0%{
@@ -171,14 +172,18 @@
 	text-transform: uppercase;
 
 }
-.score-menu span{
+.aligncenter{
+	vertical-align: text-top;
+}
+.score-menu #score{
 
-	margin-left: 8px;
+	margin-left: 3px;		
 	color: darkblue;
 	text-shadow: 0.5px 0.5px 5px white;
 	/*font-size: 40px;*/
 	font-weight: bold;
 	line-height: 100%;
+
 }
 #life img{
 	width: 25px;

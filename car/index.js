@@ -57,10 +57,11 @@ let Ecarcolor = EcarImg.length;
 let lifeline = 5;
 let count = 0
 function load(){
-	preloder();
 	box.style.animationPlayState = 'paused';	
 	star.style.display = "none";
 	nightlamp();
+	preloder();
+
 }
 function startgameplay(){
 	startgame.style.display='none';
@@ -275,7 +276,7 @@ function Enemycar(setEcar,EcarFlag){
 	let EcarY = -150*Random(1,5);
 	let EcarX = Math.floor((Math.random() * 4))*80;
 
-	if(collideEcar(EcarX,EcarY)){
+	while(collideEcar(EcarX,EcarY)){
 		EcarY = EcarY-150;
 	}
 
@@ -543,7 +544,6 @@ function checklifes(){
 			box.style.animationPlayState = 'paused';
 			stopmoveEcarY();
 			clearInterval(clearstary);
-	
 		}
 	},1000);
 }
