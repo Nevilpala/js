@@ -134,6 +134,11 @@
 	font-family: monospace;
 	margin-left: 10px;
 	height: 50px;
+	font-weight: bold;
+	background-color: rgba(0,0,0,0.3);
+	padding: 0 10px;
+	color: rgba(255,255,255,0.9);
+	text-shadow: 0.5px 0.5px 2px black;
 }
 #life{
 	/*position: absolute;*/
@@ -162,18 +167,18 @@
 	z-index: 999;
 	height: 50px;
 	background-color: rgba(1,50,32,0.3);
-}
-.score-menu p{
+	text-shadow: 0.5px 0.5px 2px white;
+	text-transform: uppercase;
 
 }
 .score-menu span{
-	margin-left: 10px;
+
+	margin-left: 8px;
 	color: darkblue;
 	text-shadow: 0.5px 0.5px 5px white;
-	font-size: 40px;
+	/*font-size: 40px;*/
 	font-weight: bold;
 	line-height: 100%;
-	vertical-align: bottom;
 }
 #life img{
 	width: 25px;

@@ -1,29 +1,32 @@
-let carimg = document.getElementById('car');
-let road = document.getElementById('road');
-let main = document.getElementById('main');
-let startgame = document.getElementById('startgame');
+const carimg = document.getElementById('car');
+const road = document.getElementById('road');
+const main = document.getElementById('main');
+const startgame = document.getElementById('startgame');
 
-let Ecar = document.getElementsByClassName('randomcar');
-let randomcar = document.getElementById('randomcar1');
-let star = document.getElementById('star');
-let score = document.getElementById('score');
+const randomcar = document.getElementById('randomcar1');
+const star = document.getElementById('star');
+const score = document.getElementById('score');
 
 let box = document.getElementById('game-container');
+
 let nightlampdiv = document.getElementsByClassName('nightlampdiv');
+let Ecar = document.getElementsByClassName('randomcar');
+
 // let nightlampdiv = document.getElementById('nightlampdiv');
 
-let gameover = document.getElementById('gameover');
+const gameover = document.getElementById('gameover');
 
 let heart = document.getElementsByClassName('heartimg');
 let tree = document.getElementsByClassName('tree');
 let lamp = document.getElementsByClassName('lamp');
 
-let overlayscore = document.getElementById('overlayscore');
-let pause = document.getElementById('pause-menu');
-let highscore = document.getElementById('highscore');
-let showhighscore = document.getElementById('showHighscore');
-let starter = document.getElementById('starter');
+const overlayscore = document.getElementById('overlayscore');
+const pause = document.getElementById('pause-menu');
+const highscore = document.getElementById('highscore');
+const showhighscore = document.getElementById('showHighscore');
+const starter = document.getElementById('starter');
 
+const nlamplen = parseInt(screen.availHeight/125);
 
 
 let posx = 0;
@@ -272,8 +275,7 @@ function Enemycar(setEcar,EcarFlag){
 	let EcarX = Math.floor((Math.random() * 4))*80;
 
 	if(collideEcar(EcarX,EcarY)){
-		Enemycar(setEcar,true);
-		return;
+		EcarY = EcarY-255;
 	}
 
 	setEcar.style.left = EcarX + 'px';
@@ -454,7 +456,7 @@ function lifecount(item){
 		}
 }
 
-function NewGame(){
+function NewGame(all){
 	relasekeylock();
 	counter();
 	pause.style.display = 'none';
@@ -469,8 +471,7 @@ function NewGame(){
 
 
 	flag=true;
-
-	if (count >0 && highscore.innerHTML<count ){
+	if (count >0 && highscore.innerHTML<count && all!=undefined){
 		highscore.innerHTML =count <10 ? '0'+count : count;
 		hslock=1;
 	}
@@ -575,8 +576,6 @@ function nightlamp(){
 }
 
 function createnightlamp(elem){
-	const nlamplen = parseInt(screen.availHeight/125);
-
 	for(let i=0;i<nlamplen;i++){
 		const nlamp = document.createElement('img');
 
@@ -627,10 +626,10 @@ function collideEcar(x,y){
 		ranx = parseInt(Xside.slice(0, -2));
 
 		let Yside = Ecars.top;
-		rany = parseInt(Yside.slice(0, -2))+125;
+		rany = parseInt(Yside.slice(0, -2));
 
 		if (x===ranx && ((rany-50) < y && (rany+125) > y|| rany===y )) {
-			console.log('.')
+			console.log('.');
 			return true;
 		}
 	}
