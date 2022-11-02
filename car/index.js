@@ -87,38 +87,57 @@ function preloder(){
 }
 
 function moveUp(){
-	posy-=10;
+	if (u) {
+		posy-=10;
 
-	if(posy<100){
-		posy = 100;
+		if(posy<100){
+			posy = 100;
+		}
+		carimg.style.top = posy + 'px';
 	}
-	carimg.style.top = posy + 'px';
+	
 
 }
 function moveDown(){
-	posy+=10;
+	if (d) {
+		posy+=10;
 
-	if(posy > screen.availHeight-195){
-		posy = screen.availHeight-195;
+		if(posy > screen.availHeight-195){
+			posy = screen.availHeight-195;
+		}
+		carimg.style.top = posy + 'px';
 	}
-	carimg.style.top = posy + 'px';
+		
 
 }
 
 function moveleft() {
-	posx-=80;
-	if (posx < 0) {
-		posx = 0;
+	if(l){
+		if(posx > 0){
+			carimg.style.transform = 'rotate(-5deg)';
+			setTimeout(staightcar,50);
+		}
+		posx-=80;
+		if (posx < 0) {
+			posx = 0;
+		}
+		carimg.style.left = posx + 'px';
 	}
-	carimg.style.left = posx + 'px';
+		
 }
 
 function moveright() {
-	posx+=80;
-	if (posx > 240) {
-		posx = 240;
+	if(r){
+		if(posx <240){
+			carimg.style.transform = 'rotate(5deg)';
+			setTimeout(staightcar,50);
+		}
+		posx+=80;
+		if (posx > 240) {
+			posx = 240;
+		}
+		carimg.style.left = posx + 'px';
 	}
-	carimg.style.left = posx + 'px';
 }
 
 function keylock(){
@@ -183,7 +202,6 @@ function counter(){
 		}
 	},1000);
 }
-
 window.addEventListener('keydown', function(e) {
 	switch (e.keyCode) {
 		case 27: // ESC
@@ -191,39 +209,21 @@ window.addEventListener('keydown', function(e) {
 			break;
 		case 32: // SPACE
 			if(space){
-
 				pausegame();
 				keylock();
 			}
 			break;
 		case 37: // LEFT ARROW
-			if(l){
-				if(posx > 0){
-					carimg.style.transform = 'rotate(-5deg)';
-					setTimeout(staightcar,50);
-				}
-
-				moveleft();
-			}
+			moveleft();
 			break;
 		case 38: // UP ARROW
-			if(u){
-				moveUp();
-			}
+			moveUp();
 			break;
 		case 39: // RIGHT ARROW
-			if(r){
-				if(posx <240){
-					carimg.style.transform = 'rotate(5deg)';
-					setTimeout(staightcar,50);
-				}
-				moveright();
-			}
+			moveright();
 			break;
 		case 40: // DOWN ARROW
-			if(d){
-				moveDown();
-			}
+			moveDown();
        		break;
    		case 8:  // backspace
 			
@@ -275,7 +275,7 @@ function Enemycar(setEcar,EcarFlag){
 	let EcarX = Math.floor((Math.random() * 4))*80;
 
 	if(collideEcar(EcarX,EcarY)){
-		EcarY = EcarY-255;
+		EcarY = EcarY-150;
 	}
 
 	setEcar.style.left = EcarX + 'px';
@@ -629,7 +629,6 @@ function collideEcar(x,y){
 		rany = parseInt(Yside.slice(0, -2));
 
 		if (x===ranx && ((rany-50) < y && (rany+125) > y|| rany===y )) {
-			console.log('.');
 			return true;
 		}
 	}
