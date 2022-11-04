@@ -2,17 +2,17 @@ const carimg = document.getElementById('car');
 const road = document.getElementById('road');
 const main = document.getElementById('main');
 const startgame = document.getElementById('startgame');
+const lifeshow = document.getElementById('lifeshow');
 
 const randomcar = document.getElementById('randomcar1');
 const star = document.getElementById('star');
 const score = document.getElementById('score');
 
-let box = document.getElementById('game-container');
+const box = document.getElementById('game-container');
 
 let nightlampdiv = document.getElementsByClassName('nightlampdiv');
 let Ecar = document.getElementsByClassName('randomcar');
-
-// let nightlampdiv = document.getElementById('nightlampdiv');
+let navi = document.getElementsByClassName('navigator');
 
 const gameover = document.getElementById('gameover');
 
@@ -55,6 +55,7 @@ let EcarImg = ["./img/tempcar.png","./img/tempcar2.png"];
 let Ecarcolor = EcarImg.length;
 
 let lifeline = 5;
+lifeshow.innerHTML = lifeline;
 let count = 0
 function load(){
 	box.style.animationPlayState = 'paused';	
@@ -182,7 +183,7 @@ function resume(){
 }
 
 function counter(){
-	clearInterval(clearcounter)
+	clearInterval(clearcounter);
 	keylock();
 	box.style.animationPlayState = 'paused';
 
@@ -190,14 +191,14 @@ function counter(){
 	var clearcounter = setInterval(() => {
 		starter.innerHTML='<span class="counters">'+ co + '</span>';
 		if(co >= 0){
-			starter.style.display = 'flex';	
+			starter.style.display = 'flex';
 			co--;
 
 			if(co < 0){
 				clearInterval(clearcounter);
 				relasekeylock();
 				starter.style.display = 'none';
-				box.style.animationPlayState = '';
+				box.style.animationPlayState = 'running';
 				co = 3;
 			}
 		}
@@ -287,6 +288,8 @@ function Enemycar(setEcar,EcarFlag){
 }
 	
 function startmoveAllEcarY(){
+	// box.style.animationPlayState = '';
+
 	for (let i = 0; i < Ecar.length; i++) {
 
 		let Y = Ecar[i].style.top;
@@ -296,6 +299,7 @@ function startmoveAllEcarY(){
 		X = parseInt(X.slice(0, -2));
 
 		startmovey(Ecar[i],X,Y);
+
 	}
 }
 function startmovey(item,x,y){
@@ -434,6 +438,8 @@ function scorecount(item,ranx,rany){
 var flag = true;
 function lifecount(item){
 		lifeline--;
+		lifeshow.innerHTML = lifeline;
+
 		overlayscores('<img src="./img/life.png" class="heartimg img-fluid "> -1');
 		if(lifeline == 5){
 			heart[lifeline].style.filter = "grayscale(0)";
@@ -463,9 +469,15 @@ function NewGame(all){
 	counter();
 	pause.style.display = 'none';
 	gameover.style.display = 'none';
+	star.style.display = 'none';
+
 
 	lifeline = 5;	
+	lifeshow.innerHTML = lifeline;
+
 	posx=0;
+	
+
 	posy = screen.availHeight-195;
 
 	carimg.style.top = posy + 'px';

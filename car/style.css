@@ -110,12 +110,15 @@
 	align-items: center;
 	justify-content: space-between;
 	width: 100%;
-	height: 50px;
+	min-height: 50px;
 	position: absolute;
 	top: 0;
 	left: 0;
 }
-
+.pause{
+	position: relative;
+	z-index: 9;
+}
 .pause img{
 	width: 50px;
 	height: 50px;
@@ -141,7 +144,7 @@
 	color: rgba(255,255,255,0.9);
 	text-shadow: 0.5px 0.5px 2px black;
 }
-#life{
+#life,.life{
 	/*position: absolute;*/
 	/*top: 0;*/
 	/*left: 0;*/
@@ -154,6 +157,36 @@
 	padding: 0 10px;
 	z-index: 999;
 
+}
+#life2{
+	display: none;
+
+}
+#life2 img{
+	width: 40px;
+}
+#life2 div{
+	position:relative;
+		
+}
+#life2 #lifeshow{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: 3px;
+	transform: translate(-50%,-50%);
+	font-size: 15px;
+}
+@media screen and (max-width: 600px){
+	.sm-hide{
+		display: none;
+	}
+	#life{
+		display: none;
+	}
+	#life2{
+		display: block;
+	}
 }
 .score-menu{
 	/*position: absolute;*/
@@ -432,6 +465,7 @@ img.tree{
 }
 #startgame{
 	display: block;
+	/*display: none;*/
 }
 #startgame button{
 	position: absolute;
