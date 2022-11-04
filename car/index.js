@@ -44,6 +44,7 @@ let d = true;
 let u = true;
 let space = true;
 let flagimg = 0;
+let flaggameover =true;
 
 var clearstary = "";
 var cleardaynight = "";
@@ -376,7 +377,7 @@ function scorecount(item,ranx,rany){
 		setTimeout(startmoveAllEcarY,2000);	
 
 		setTimeout(starmaker,1500);
-		setTimeout(moveLampY,2000);
+		if(flaggameover) setTimeout(moveLampY,2000);
 		daynightvision();
 
 
@@ -448,7 +449,9 @@ function lifecount(item){
 			heart[lifeline].style.filter = "grayscale(1)";
 		}
 		else if(lifeline == 0){	
+			flaggameover=false;
 			checklifes();
+			stopAllItem();
 			keylock();
 			box.style.animationPlayState = 'paused';
 			stopmoveEcarY();
@@ -467,6 +470,7 @@ function lifecount(item){
 function NewGame(all){
 	relasekeylock();
 	counter();
+
 	pause.style.display = 'none';
 	gameover.style.display = 'none';
 	star.style.display = 'none';
@@ -497,6 +501,7 @@ function NewGame(all){
 	}
 	stopmoveEcarY();
 	hideAllEcar();
+	stopAllItem();
 	clearInterval(clearstary);	
 	clearInterval(checklife);	
 
